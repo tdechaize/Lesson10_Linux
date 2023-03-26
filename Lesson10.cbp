@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="lesson10" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Option show_notes="0">
+			<notes>
+				<![CDATA[=====================================================================
+OpenGL Lesson 10 :  Creating Another OpenGL Window with glut on Linux
+=====================================================================
+
+  Authors Name: Jeff Molofee ( NeHe )
+
+  This code was created by Jeff Molofee '99 (ported to Linux/GLUT by Richard Campbell '99)
+
+  If you've found this code useful, please let me know.
+
+  Visit me at www.demonews.com/hosted/nehe
+ (email Richard Campbell at ulmont@bellsouth.net)
+
+  Disclaimer:
+
+  This program may crash your system or run poorly depending on your
+  hardware.  The program and code contained in this archive was scanned
+  for virii and has passed all test before it was put online.  If you
+  use this code in project of your own, send a shout out to the author!
+
+=====================================================================
+                NeHe Productions 1999-2004
+=====================================================================
+
+  Modified smoothly by Thierry DECHAIZE
+
+  Paradigm : obtain one source (only one !) compatible for multiple free C Compilers
+    and provide for all users an development environment on Linux (64 bits compatible),
+    the great Code::Blocks manager (version 20.03), and don't use libglaux.lib or libglaux.so
+
+	a) gcc 11.3.0 (32 and 64 bits) version officielle : commande pour l'installation sur Linux Mint
+       -> sudo apt-get install freeglut3 libglew-dev gcc g++ mesa-common-dev build-essential libglew2.2 libglm-dev binutils libc6 libc6-dev ; option -m32 to 32 bits ; no option to 64 bits
+	b) CLANG version 14.0.6 (32 et 64 bits), adossé aux environnements gcc : commande pour l'installation sur Linux Mint
+       -> sudo apt-get install llvm clang ; options pour la compilation et l'édition de liens -> --target=i686-pc-linux-gnu (32 bits) --target=x86_64-pc-linux-gnu (64 bits)
+	c) Mingw 32 ou 64 bits version gcc version 10-win32 20220113 : commande pour l'installation sur Linux Mint (NOT YET ACTIVED - Work in progress : to verify portability of these code) 
+        -> sudo apt-get install mingw64    (ATTENTION, il s'agit d'une cross génération : l'exécutable créé ne fonctionne que sur Windows !!!)
+]]>
+			</notes>
+		</Option>
+		<Build>
+			<Target title="GNUC 32b Debug">
+				<Option output="bingcc32/Debug/lesson10.exe" prefix_auto="1" extension_auto="0" />
+				<Option object_output="objgcc32/Debug/" />
+				<Option type="1" />
+				<Option compiler="gnu_gcc_compiler_32b" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-D_DEBUG" />
+					<Add option="-DDEBUG" />
+				</Compiler>
+				<Linker>
+					<Add library="GL" />
+					<Add library="glut" />
+					<Add library="GLU" />
+					<Add library="m" />
+				</Linker>
+			</Target>
+			<Target title="GNUC 32b Release">
+				<Option output="bingcc32/Release/lesson10.exe" prefix_auto="1" extension_auto="0" />
+				<Option object_output="objgcc32/Release/" />
+				<Option type="1" />
+				<Option compiler="gnu_gcc_compiler_32b" />
+				<Compiler>
+					<Add option="-m32" />
+					<Add option="-DNDEBUG" />
+				</Compiler>
+				<Linker>
+					<Add option="-m32" />
+					<Add library="GL" />
+					<Add library="glut" />
+					<Add library="GLU" />
+					<Add library="m" />
+				</Linker>
+			</Target>
+			<Target title="GNUC 64b Debug">
+				<Option output="bingcc64/Debug/lesson10.exe" prefix_auto="1" extension_auto="0" />
+				<Option object_output="objgcc64/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-D_DEBUG" />
+					<Add option="-DDEBUG" />
+				</Compiler>
+				<Linker>
+					<Add library="GL" />
+					<Add library="glut" />
+					<Add library="GLU" />
+					<Add library="m" />
+				</Linker>
+			</Target>
+			<Target title="GNUC 64b Release">
+				<Option output="bingcc64/Release/lesson10.exe" prefix_auto="1" extension_auto="0" />
+				<Option object_output="objgcc64/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-DNDEBUG" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="GL" />
+					<Add library="glut" />
+					<Add library="GLU" />
+					<Add library="m" />
+				</Linker>
+			</Target>
+			<Target title="CLANG 32b Debug">
+				<Option output="binclang32/Debug/lesson10.exe" prefix_auto="1" extension_auto="0" />
+				<Option object_output="objclang32/Debug/" />
+				<Option type="1" />
+				<Option compiler="LLVM_Clang_Compiler_32b" />
+				<Compiler>
+					<Add option="-O0" />
+					<Add option="-D_DEBUG" />
+					<Add option="-DDEBUG" />
+				</Compiler>
+				<Linker>
+					<Add library="GL" />
+					<Add library="glut" />
+					<Add library="GLU" />
+					<Add library="m" />
+				</Linker>
+			</Target>
+			<Target title="CLANG 32b Release">
+				<Option output="binclang32/Release/lesson10.exe" prefix_auto="1" extension_auto="0" />
+				<Option object_output="objclang32/Release/" />
+				<Option type="1" />
+				<Option compiler="LLVM_Clang_Compiler_32b" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-DNDEBUG" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="GL" />
+					<Add library="glut" />
+					<Add library="GLU" />
+					<Add library="m" />
+				</Linker>
+			</Target>
+			<Target title="CLANG 64b Debug">
+				<Option output="binclang64/Debug/lesson10.exe" prefix_auto="1" extension_auto="0" />
+				<Option object_output="objclang64/Debug/" />
+				<Option type="1" />
+				<Option compiler="clang" />
+				<Compiler>
+					<Add option="-O0" />
+					<Add option="-D_DEBUG" />
+					<Add option="-DDEBUG" />
+				</Compiler>
+				<Linker>
+					<Add library="GL" />
+					<Add library="glut" />
+					<Add library="GLU" />
+					<Add library="m" />
+				</Linker>
+			</Target>
+			<Target title="CLANG 64b Release">
+				<Option output="binclang64/Release/lesson10.exe" prefix_auto="1" extension_auto="0" />
+				<Option object_output="objclang64/Release/" />
+				<Option type="1" />
+				<Option compiler="clang" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-DNDEBUG" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="GL" />
+					<Add library="glut" />
+					<Add library="GLU" />
+					<Add library="m" />
+				</Linker>
+			</Target>
+			<Target title="Archive">
+				<Option output="lesson10_src" prefix_auto="1" extension_auto="1" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option use_console_runner="0" />
+				<ExtraCommands>
+					<Add before="rm --interactive=never *.7z || true" />
+					<Add before="rm --interactive=never *.tar || true" />
+					<Add before="python3 /home/thierry/Sources/tools/Size_exec.py $(PROJECT_NAME)" />
+					<Add before="python3 /home/thierry/Sources/tools/Calc_checksums.py $(PROJECT_NAME)" />
+					<Add after='7z a $(PROJECT_NAME)_&quot;`date +&quot;%Y-%m-%d&quot;`&quot;_src.7z src/* res/* data/* build.cmake/* build.shell/* *.bat *.txt *.html *.md doxygen/* doc/* *.cbp *.workspace &apos;-x!*.bak&apos; -mhe=on -p&quot;$(PROJECT_NAME)_tde@03!&quot;' />
+					<Add after='7z a -ttar $(PROJECT_NAME)_&quot;`date +&quot;%Y-%m-%d&quot;`&quot;_all.tar * &apos;-x!*.bak&apos;  &apos;-x!*.7z&apos;' />
+					<Add after='7z a $(PROJECT_NAME)_&quot;`date +&quot;%Y-%m-%d&quot;`&quot;_all.7z *_all.tar -mhe=on -p&quot;$(PROJECT_NAME)_tde@03!&quot;' />
+					<Add after="rm --interactive=never *.tar || true" />
+				</ExtraCommands>
+			</Target>
+		</Build>
+		<VirtualTargets>
+			<Add alias="all_build" targets="GNUC 32b Debug;GNUC 32b Release;GNUC 64b Debug;GNUC 64b Release;CLANG 32b Debug;CLANG 32b Release;CLANG 64b Debug;CLANG 64b Release;Archive;" />
+		</VirtualTargets>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="src/lesson10.c">
+			<Option compilerVar="CC" />
+			<Option target="GNUC 32b Debug" />
+			<Option target="GNUC 32b Release" />
+			<Option target="GNUC 64b Debug" />
+			<Option target="GNUC 64b Release" />
+			<Option target="CLANG 32b Debug" />
+			<Option target="CLANG 32b Release" />
+			<Option target="CLANG 64b Debug" />
+			<Option target="CLANG 64b Release" />
+		</Unit>
+		<Unit filename="src/logger.c">
+			<Option compilerVar="CC" />
+			<Option target="GNUC 32b Debug" />
+			<Option target="GNUC 32b Release" />
+			<Option target="GNUC 64b Debug" />
+			<Option target="GNUC 64b Release" />
+			<Option target="CLANG 32b Debug" />
+			<Option target="CLANG 32b Release" />
+			<Option target="CLANG 64b Debug" />
+			<Option target="CLANG 64b Release" />
+		</Unit>
+		<Unit filename="src/logger.h">
+			<Option target="GNUC 32b Debug" />
+			<Option target="GNUC 32b Release" />
+			<Option target="GNUC 64b Debug" />
+			<Option target="GNUC 64b Release" />
+			<Option target="CLANG 32b Debug" />
+			<Option target="CLANG 32b Release" />
+			<Option target="CLANG 64b Debug" />
+			<Option target="CLANG 64b Release" />
+		</Unit>
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>
