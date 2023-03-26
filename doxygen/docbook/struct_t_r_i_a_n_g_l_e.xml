@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_struct_t_r_i_a_n_g_l_e" xml:lang="en-US">
+<title>TRIANGLE Struct Reference</title>
+<indexterm><primary>TRIANGLE</primary></indexterm>
+Collaboration diagram for TRIANGLE:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="struct_t_r_i_a_n_g_l_e__coll__graph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<simplesect>
+    <title>Public Attributes    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_struct_v_e_r_t_e_x">VERTEX</link> <link linkend="_struct_t_r_i_a_n_g_l_e_1ad98dfc475e080cad733d3394477d342a">vertex</link> [3]</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Member Data Documentation</title>
+<anchor xml:id="_struct_t_r_i_a_n_g_l_e_1ad98dfc475e080cad733d3394477d342a"/>    <section>
+    <title>vertex</title>
+<indexterm><primary>vertex</primary><secondary>TRIANGLE</secondary></indexterm>
+<indexterm><primary>TRIANGLE</primary><secondary>vertex</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_v_e_r_t_e_x">VERTEX</link> TRIANGLE::vertex[3]</computeroutput></para></section>
+<para>
+The documentation for this struct was generated from the following file:</para>
+/home/thierry/Sources/Opengl/Lesson10/src/<link linkend="_lesson10_8c">lesson10.c</link></section>
+</section>

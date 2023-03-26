@@ -1,0 +1,819 @@
+\doxysection{/home/thierry/\+Sources/\+Opengl/\+Lesson10/src/lesson10.c File Reference}
+\label{lesson10_8c}\index{/home/thierry/Sources/Opengl/Lesson10/src/lesson10.c@{/home/thierry/Sources/Opengl/Lesson10/src/lesson10.c}}
+
+
+Ouvre une simple fenêtre Wayland on Linux et affiche un \char`\"{}monde\char`\"{} virtuel (un gros cube avec des ouvertures sur chaque face verticale et une texture reproduite sur les murs)  
+
+
+{\ttfamily \#include $<$GL/glut.\+h$>$}\newline
+{\ttfamily \#include $<$GL/gl.\+h$>$}\newline
+{\ttfamily \#include $<$GL/glu.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+Include dependency graph for lesson10.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lesson10_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \textbf{ VERTEX}
+\item 
+struct \textbf{ TRIANGLE}
+\item 
+struct \textbf{ SECTOR}
+\item 
+struct \textbf{ Image}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \textbf{ ESCAPE}~27
+\item 
+\#define \textbf{ PAGE\+\_\+\+UP}~73
+\item 
+\#define \textbf{ PAGE\+\_\+\+DOWN}~81
+\item 
+\#define \textbf{ UP\+\_\+\+ARROW}~72
+\item 
+\#define \textbf{ DOWN\+\_\+\+ARROW}~80
+\item 
+\#define \textbf{ LEFT\+\_\+\+ARROW}~75
+\item 
+\#define \textbf{ RIGHT\+\_\+\+ARROW}~77
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+float \textbf{ rad} (float angle)
+\item 
+void \textbf{ readstr} (FILE $\ast$f, char $\ast$string)
+\begin{DoxyCompactList}\small\item\em Fonction readstr \+: fonction chargeant dans une chaîne de caractere l\textquotesingle{}article lu dans un fichier texte. \end{DoxyCompactList}\item 
+void \textbf{ Setup\+World} ()
+\begin{DoxyCompactList}\small\item\em Fonction Setup\+World \+: fonction chargeant la description du \char`\"{}monde\char`\"{} à partir d\textquotesingle{}un fichier texte. \end{DoxyCompactList}\item 
+int \textbf{ Image\+Load} (char $\ast$filename, \textbf{ Image} $\ast$image)
+\begin{DoxyCompactList}\small\item\em Fonction Image\+Load \+: fonction chargeant une image stockée dans un fichier BMP. \end{DoxyCompactList}\item 
+GLvoid \textbf{ Load\+GLTextures} (GLvoid)
+\begin{DoxyCompactList}\small\item\em Fonction Load\+GLTextures \+: fonction chargeant la texture à appliquer à un objet avec des instructions Open\+GL. \end{DoxyCompactList}\item 
+GLvoid \textbf{ Init\+GL} (GLsizei Width, GLsizei Height)
+\begin{DoxyCompactList}\small\item\em Fonction Init\+GL \+: fonction gerant les caractéristiques de base de la scéne lorsque avec des instructions Open\+GL (arrière plan, profondeur, type de profondeur, ...) \end{DoxyCompactList}\item 
+GLvoid \textbf{ Re\+Size\+GLScene} (GLsizei Width, GLsizei Height)
+\begin{DoxyCompactList}\small\item\em Fonction Re\+Size\+GLScene \+: fonction gerant les nouvelles dimensions de la scéne lorsque l\textquotesingle{}utilisateur agit sur un redimensionnement de la fenêtre. \end{DoxyCompactList}\item 
+GLvoid \textbf{ Draw\+GLScene} (GLvoid)
+\begin{DoxyCompactList}\small\item\em Fonction Draw\+GLScene \+: fonction generant l\textquotesingle{}affichage attendu avec des instructions Open\+GL. \end{DoxyCompactList}\item 
+void \textbf{ key\+Pressed} (unsigned char key, int x, int y)
+\begin{DoxyCompactList}\small\item\em Fonction key\+Pressed \+: fonction permettant de connaître quelle touche a été tapée au clavier. \end{DoxyCompactList}\item 
+void \textbf{ special\+Key\+Pressed} (int key, int x, int y)
+\begin{DoxyCompactList}\small\item\em Fonction special\+Key\+Pressed \+: fonction permettant de connaître quelle touche spéciale a été tapée au clavier. \end{DoxyCompactList}\item 
+int \textbf{ main} (int argc, char $\ast$$\ast$argv)
+\begin{DoxyCompactList}\small\item\em Programme Main obligatoire pour les programmes sous Linux (Open\+GL en mode console). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \textbf{ window}
+\item 
+int \textbf{ n\+Full\+Screen} =0
+\item 
+GLuint \textbf{ loop}
+\item 
+GLuint \textbf{ texture} [3]
+\item 
+int \textbf{ light} = 0
+\item 
+int \textbf{ blend} = 0
+\item 
+GLfloat \textbf{ xrot}
+\item 
+GLfloat \textbf{ yrot}
+\item 
+GLfloat \textbf{ xspeed}
+\item 
+GLfloat \textbf{ yspeed}
+\item 
+GLfloat \textbf{ walkbias} = 0
+\item 
+GLfloat \textbf{ walkbiasangle} = 0
+\item 
+GLfloat \textbf{ lookupdown} = 0.\+0
+\item 
+const float \textbf{ piover180} = 0.\+0174532925f
+\item 
+float \textbf{ heading}
+\item 
+float \textbf{ xpos}
+\item 
+float \textbf{ zpos}
+\item 
+GLfloat \textbf{ camx} = 0
+\item 
+GLfloat \textbf{ camy} = 0
+\item 
+GLfloat \textbf{ camz} = 0
+\item 
+GLfloat \textbf{ therotate}
+\item 
+GLfloat \textbf{ z} =0.\+0f
+\item 
+GLfloat \textbf{ Light\+Ambient} [$\,$] = \{0.\+5f, 0.\+5f, 0.\+5f, 1.\+0f\}
+\item 
+GLfloat \textbf{ Light\+Diffuse} [$\,$] = \{1.\+0f, 1.\+0f, 1.\+0f, 1.\+0f\}
+\item 
+GLfloat \textbf{ Light\+Position} [$\,$] = \{0.\+0f, 0.\+0f, 2.\+0f, 1.\+0f\}
+\item 
+GLuint \textbf{ filter} = 0
+\item 
+\textbf{ SECTOR} \textbf{ sector1}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Ouvre une simple fenêtre Wayland on Linux et affiche un \char`\"{}monde\char`\"{} virtuel (un gros cube avec des ouvertures sur chaque face verticale et une texture reproduite sur les murs) 
+
+Comments manageable by Doxygen
+
+Modified smoothly by Thierry DECHAIZE
+
+Paradigm \+: obtain one source (only one !) compatible for multiple free C Compilers and provide for all users an development environment on Linux (64 bits compatible), the great Code\+::\+Blocks manager (version 20.\+03), and don\textquotesingle{}t use glaux.\+lib or glaux.\+dll.
+
+a) gcc 11.\+3.\+0 (32 and 64 bits) version officielle \+: commande pour l\textquotesingle{}installation sur Linux Mint -\/$>$ sudo apt-\/get install freeglut3 libglew-\/dev gcc g++ mesa-\/common-\/dev build-\/essential libglew2.\+2 libglm-\/dev binutils libc6 libc6-\/dev gcc-\/multilib g++-\/multilib; option -\/m32 to 32 bits ; no option to 64 bits b) CLANG version 14.\+0.\+6 (32 et 64 bits), adossé aux environnements gcc \+: commande pour l\textquotesingle{}installation sur Linux Mint -\/$>$ sudo apt-\/get install llvm clang ; options pour la compilation et l\textquotesingle{}édition de liens -\/$>$ --target=i686-\/pc-\/linux-\/gnu (32 bits) --target=x86\+\_\+64-\/pc-\/linux-\/gnu (64 bits) c) Mingw 32 ou 64 bits version gcc version 10-\/win32 20220113 \+: commande pour l\textquotesingle{}installation sur Linux Mint -\/$>$ sudo apt-\/get install mingw64 (ATTENTION, il s\textquotesingle{}agit d\textquotesingle{}une cross génération \+: l\textquotesingle{}exécutable créé ne fonctionne que sur Windows !!!)
+
+Date \+: 2023/03/26
+
+\begin{DoxyAuthor}{Author}
+Jeff Molofee ( Ne\+He ) originely, ported to Linux by Richard Campbell, and after by Thierry Dechaize on Linux Mint 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+2.\+0.\+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+26 mars 2023
+\end{DoxyDate}
+Ce programme gére plusieurs événements \+: le clic sur le bouton \char`\"{}\+Fermé\char`\"{} de la fenêtre, la sortie par la touche ESC ou par les touches \char`\"{}q\char`\"{} ou \char`\"{}\+Q\char`\"{} [Quit]
+
+les touches \char`\"{}b\char`\"{} ou \char`\"{}\+B\char`\"{} qui active ou non le \char`\"{}blending\char`\"{}, les touches \char`\"{}i\char`\"{} ou \char`\"{}\+I\char`\"{} qui active ou non le \char`\"{}\+Filter\char`\"{},
+
+les touches \char`\"{}l\char`\"{} ou \char`\"{}\+L\char`\"{} qui active ou non le \char`\"{}ligthing\char`\"{}, les touches \char`\"{}f\char`\"{} ou \char`\"{}\+F\char`\"{} qui active ou non le \char`\"{}\+Full Screen\char`\"{}. 
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\label{lesson10_8c_a5b1eca6358420b8748a151949d3119fa}} 
+\index{lesson10.c@{lesson10.c}!DOWN\_ARROW@{DOWN\_ARROW}}
+\index{DOWN\_ARROW@{DOWN\_ARROW}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{DOWN\_ARROW}
+{\footnotesize\ttfamily \#define DOWN\+\_\+\+ARROW~80}
+
+\mbox{\label{lesson10_8c_afe4b0e625372cd38ec60150d6f5594b8}} 
+\index{lesson10.c@{lesson10.c}!ESCAPE@{ESCAPE}}
+\index{ESCAPE@{ESCAPE}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{ESCAPE}
+{\footnotesize\ttfamily \#define ESCAPE~27}
+
+\mbox{\label{lesson10_8c_ae78ccf44cb7970752cbfeb22e6a66d14}} 
+\index{lesson10.c@{lesson10.c}!LEFT\_ARROW@{LEFT\_ARROW}}
+\index{LEFT\_ARROW@{LEFT\_ARROW}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{LEFT\_ARROW}
+{\footnotesize\ttfamily \#define LEFT\+\_\+\+ARROW~75}
+
+\mbox{\label{lesson10_8c_aa6e25cc2f8865bc6d5102488bcc35229}} 
+\index{lesson10.c@{lesson10.c}!PAGE\_DOWN@{PAGE\_DOWN}}
+\index{PAGE\_DOWN@{PAGE\_DOWN}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{PAGE\_DOWN}
+{\footnotesize\ttfamily \#define PAGE\+\_\+\+DOWN~81}
+
+\mbox{\label{lesson10_8c_af7813ee8c85154e76928f5f1c1acf2ea}} 
+\index{lesson10.c@{lesson10.c}!PAGE\_UP@{PAGE\_UP}}
+\index{PAGE\_UP@{PAGE\_UP}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{PAGE\_UP}
+{\footnotesize\ttfamily \#define PAGE\+\_\+\+UP~73}
+
+\mbox{\label{lesson10_8c_a9ed2533108b634266a6261c8f37e4fc0}} 
+\index{lesson10.c@{lesson10.c}!RIGHT\_ARROW@{RIGHT\_ARROW}}
+\index{RIGHT\_ARROW@{RIGHT\_ARROW}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{RIGHT\_ARROW}
+{\footnotesize\ttfamily \#define RIGHT\+\_\+\+ARROW~77}
+
+\mbox{\label{lesson10_8c_ad315ce436b88e78c266532e4714dd197}} 
+\index{lesson10.c@{lesson10.c}!UP\_ARROW@{UP\_ARROW}}
+\index{UP\_ARROW@{UP\_ARROW}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{UP\_ARROW}
+{\footnotesize\ttfamily \#define UP\+\_\+\+ARROW~72}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\label{lesson10_8c_a8a5c79aa658c56b0e9abb9c539d844dd}} 
+\index{lesson10.c@{lesson10.c}!DrawGLScene@{DrawGLScene}}
+\index{DrawGLScene@{DrawGLScene}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{DrawGLScene()}
+{\footnotesize\ttfamily GLvoid Draw\+GLScene (\begin{DoxyParamCaption}\item[{GLvoid}]{ }\end{DoxyParamCaption})}
+
+
+
+Fonction Draw\+GLScene \+: fonction generant l\textquotesingle{}affichage attendu avec des instructions Open\+GL. 
+
+This function generate the scene with instructions Open\+GL
+
+Aucun paramètre dans ce cas de figure car tout est géré directement à l\textquotesingle{}intérieur de cette fonction d\textquotesingle{}affichage. \begin{DoxyReturn}{Returns}
+void aucun retour. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=241pt]{lesson10_8c_a8a5c79aa658c56b0e9abb9c539d844dd_icgraph}
+\end{center}
+\end{figure}
+\mbox{\label{lesson10_8c_a1e57a44f938df68cadc0cdf69a91f3da}} 
+\index{lesson10.c@{lesson10.c}!ImageLoad@{ImageLoad}}
+\index{ImageLoad@{ImageLoad}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{ImageLoad()}
+{\footnotesize\ttfamily int Image\+Load (\begin{DoxyParamCaption}\item[{char $\ast$}]{filename,  }\item[{\textbf{ Image} $\ast$}]{image }\end{DoxyParamCaption})}
+
+
+
+Fonction Image\+Load \+: fonction chargeant une image stockée dans un fichier BMP. 
+
+This function load image stored in file BMP (quick and dirty bitmap loader !! bug on SOLARIS/\+SPARC -\/$>$ two new functions below to correct the initial code)
+
+En entrée, le nom du fichier stockant l\textquotesingle{}image, en retour l\textquotesingle{}image chargée en mémoire. 
+\begin{DoxyParams}{Parameters}
+{\em $\ast$filename} & Le nom du fichier stockant l\textquotesingle{}image $\ast$ \\
+\hline
+{\em $\ast$image} & l\textquotesingle{}image chargée en mémoire $\ast$ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int un entier de type booléen (0 / 1). 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lesson10_8c_a1e57a44f938df68cadc0cdf69a91f3da_icgraph}
+\end{center}
+\end{figure}
+\mbox{\label{lesson10_8c_a01c1565f633296063acd943b63027c17}} 
+\index{lesson10.c@{lesson10.c}!InitGL@{InitGL}}
+\index{InitGL@{InitGL}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{InitGL()}
+{\footnotesize\ttfamily GLvoid Init\+GL (\begin{DoxyParamCaption}\item[{GLsizei}]{Width,  }\item[{GLsizei}]{Height }\end{DoxyParamCaption})}
+
+
+
+Fonction Init\+GL \+: fonction gerant les caractéristiques de base de la scéne lorsque avec des instructions Open\+GL (arrière plan, profondeur, type de profondeur, ...) 
+
+This function initialize the basics characteristics of the scene with instructions Open\+GL (background, depth, type of depth, reset of the projection matrix, ...)
+
+En retour les deux paramètres des nouvelles valeurs de largeur et de hauteur de la fenêtre redimensionnée. 
+\begin{DoxyParams}{Parameters}
+{\em Width} & la largeur de la fenêtre lors de l\textquotesingle{}initialisation $\ast$ \\
+\hline
+{\em Height} & la hauteur de la fenêtre lors de l\textquotesingle{}initialisation $\ast$ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void aucun retour. 
+\end{DoxyReturn}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lesson10_8c_a01c1565f633296063acd943b63027c17_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=202pt]{lesson10_8c_a01c1565f633296063acd943b63027c17_icgraph}
+\end{center}
+\end{figure}
+\mbox{\label{lesson10_8c_ae49b22892a1276b5e664963496a34177}} 
+\index{lesson10.c@{lesson10.c}!keyPressed@{keyPressed}}
+\index{keyPressed@{keyPressed}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{keyPressed()}
+{\footnotesize\ttfamily void key\+Pressed (\begin{DoxyParamCaption}\item[{unsigned char}]{key,  }\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})}
+
+
+
+Fonction key\+Pressed \+: fonction permettant de connaître quelle touche a été tapée au clavier. 
+
+This function inform caller with key pressed.
+
+Le premier paarmètre en retour de cette fonction correspond à la touche précédemment appuyée. 
+\begin{DoxyParams}{Parameters}
+{\em key} & la touche appuyée $\ast$ \\
+\hline
+{\em x} & une position x au niveau du clavier $\ast$ \\
+\hline
+{\em y} & une position y au niveau du clavier $\ast$ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void aucun retour. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{lesson10_8c_ae49b22892a1276b5e664963496a34177_icgraph}
+\end{center}
+\end{figure}
+\mbox{\label{lesson10_8c_a85ddff9fc80b25a71838e2008c6c00ee}} 
+\index{lesson10.c@{lesson10.c}!LoadGLTextures@{LoadGLTextures}}
+\index{LoadGLTextures@{LoadGLTextures}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{LoadGLTextures()}
+{\footnotesize\ttfamily GLvoid Load\+GLTextures (\begin{DoxyParamCaption}\item[{GLvoid}]{ }\end{DoxyParamCaption})}
+
+
+
+Fonction Load\+GLTextures \+: fonction chargeant la texture à appliquer à un objet avec des instructions Open\+GL. 
+
+This function load textures used for object with instructions Open\+GL
+
+Aucun paramètre en entrée, et rien en retour (GLVoid). \begin{DoxyReturn}{Returns}
+GLvoid aucun retour. 
+\end{DoxyReturn}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=280pt]{lesson10_8c_a85ddff9fc80b25a71838e2008c6c00ee_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=331pt]{lesson10_8c_a85ddff9fc80b25a71838e2008c6c00ee_icgraph}
+\end{center}
+\end{figure}
+\mbox{\label{lesson10_8c_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{lesson10.c@{lesson10.c}!main@{main}}
+\index{main@{main}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{main()}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+
+
+Programme Main obligatoire pour les programmes sous Linux (Open\+GL en mode console). 
+
+Comments manageable by Doxygen
+
+Programme principal de lancement de l\textquotesingle{}application qui appelle ensuite toutes les fonctions utiles Open\+GL et surtout glut. 
+\begin{DoxyParams}{Parameters}
+{\em argc} & le nombre de paramètres de la ligne de commande. \\
+\hline
+{\em argv} & un pointeur sur le tableau des différents paramètres de la ligne de commande. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int un entier permettant de connaître la statut du lancement du programme. 
+\end{DoxyReturn}
+This Code initialize the context of windows on Wayland with glut.
+
+Appel de la fonction glut\+Init \+: fonction Glut d\textquotesingle{}initialisation
+
+En entrée de cette fonction, les paramètres de la ligne de commande. 
+\begin{DoxyParams}{Parameters}
+{\em argc} & le nombre de paramètres mis à disposition $\ast$ \\
+\hline
+{\em argv} & Hle tableau des différents paramètres mis à disposition $\ast$ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int un integer.
+\end{DoxyReturn}
+This Code initialize le mode d\textquotesingle{}affichage défini avec une fonction glut.
+
+Appel de la fonction glut\+Init\+Display\+Mode(\+: fonction Glut initialisant le mode d\textquotesingle{}affichage.
+
+En entrée de cette fonction, des paramètres séparés par des \char`\"{}ou logique\char`\"{}. 
+\begin{DoxyParams}{Parameters}
+{\em const} & une succession deparamètres séparés par des \char`\"{}ou logique\char`\"{}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void aucun retour de fonction.
+\end{DoxyReturn}
+This Code initialize the dimensions (width \& height) of the window into screen.
+
+Appel de la fonction glut\+Init\+Window\+Size \+: fonction Glut initialisant la position de la fenêtre dans l\textquotesingle{}écran.
+
+En entrée de cette fonction, les deux paramètres X et Y correspondant à la taille de la fenêtre dans l\textquotesingle{}écran (deux dimensions) 
+\begin{DoxyParams}{Parameters}
+{\em X} & la largeur de la fenêtre en x \\
+\hline
+{\em Y} & la hauteur de la fenêtre en y \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void aucun retour de fonction.
+\end{DoxyReturn}
+This Code initialize the position of the window into screen.
+
+Appel de la fonction glut\+Init\+Window\+Position \+: fonction Glut initialisant la position de la fenêtre dans l\textquotesingle{}écran.
+
+En entrée de cette fonction, les deux paramètres X et Y de positionnement de la fenêtre dans l\textquotesingle{}écran (deux dimensions) 
+\begin{DoxyParams}{Parameters}
+{\em X} & le positionnement de la fenêtre en x \\
+\hline
+{\em Y} & le positionnement de la fenêtre en y \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void aucun retour de fonction.
+\end{DoxyReturn}
+This Code create windows on Wayland with glut.
+
+Appel de la fonction glut\+Create\+Window \+: fonction Glut créant une fenêtre Wayland avec glut.
+
+En entrée de cette fonction, l\textquotesingle{}identification de la fenêtre (.id. son nom). 
+\begin{DoxyParams}{Parameters}
+{\em tittle} & le nom de la fenêtre \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int l\textquotesingle{}identifiant entier de la fenêtre créee.
+\end{DoxyReturn}
+This Code rely the internal function Draw\+GLScene at the display function of glut.
+
+Appel de la fonction glut\+Display\+Func \+: fonction Glut permettant d\textquotesingle{}activer la fonction interne d\textquotesingle{}affichage.
+
+En entrée de cette fonction, l\textquotesingle{}adresse de la fonction interne appellée . 
+\begin{DoxyParams}{Parameters}
+{\em \&function} & l\textquotesingle{}adresse de la fonction interne d\textquotesingle{}affichage. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void aucun retour de fonction.
+\end{DoxyReturn}
+This Code rely the internal function Draw\+GLScene at the Idle Function of glut.
+
+Appel de la fonction glut\+Idle\+Func \+: fonction d\textquotesingle{}attente de Glut permettant d\textquotesingle{}activer la fonction interne d\textquotesingle{}affichage.
+
+En entrée de cette fonction, l\textquotesingle{}adresse de la fonction interne appellée . 
+\begin{DoxyParams}{Parameters}
+{\em \&function} & l\textquotesingle{}adresse de la fonction interne d\textquotesingle{}affichage. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void aucun retour de fonction.
+\end{DoxyReturn}
+This Code rely the internal function Resize\+GLScene at the reshape function of glut.
+
+Appel de la fonction glut\+Reshape\+Func \+: fonction Glut permettant d\textquotesingle{}activer la fonction interne de changement des dimensions d\textquotesingle{}affichage.
+
+En entrée de cette fonction, l\textquotesingle{}adresse de la fonction interne appellée. 
+\begin{DoxyParams}{Parameters}
+{\em \&\+Resize\+GLScene} & l\textquotesingle{}adresse de la fonction interne traitant des changements de dimension de l\textquotesingle{}affichage. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void aucun retour de fonction.
+\end{DoxyReturn}
+This Code rely the internal function special\+Key\+Pressed at the special keyboard function of glut (special touchs).
+
+Appel de la fonction glut\+Special\+Func \+: fonction Glut permettant de recupérer la touche appuyée sur le clavier (touches spéciales).
+
+En entrée de cette fonction, l\textquotesingle{}adresse de la fonction interne gérant les appuis sur le clavier. 
+\begin{DoxyParams}{Parameters}
+{\em \&special\+Key\+Pressed} & l\textquotesingle{}adresse de la fonction interne gérant les appuis sur le clavier (touches spéciales). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void aucun retour de fonction.
+\end{DoxyReturn}
+This Code rely the internal function special\+Key\+Pressed at the special keyboard function of glut (special touchs).
+
+Appel de la fonction glut\+Special\+Func \+: fonction Glut permettant de recupérer la touche appuyée sur le clavier (touches spéciales).
+
+En entrée de cette fonction, l\textquotesingle{}adresse de la fonction interne gérant les appuis sur le clavier. 
+\begin{DoxyParams}{Parameters}
+{\em \&special\+Key\+Pressed} & l\textquotesingle{}adresse de la fonction interne gérant les appuis sur le clavier (touches spéciales). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void aucun retour de fonction.
+\end{DoxyReturn}
+This Code initialize les paramètres d\textquotesingle{}affichage Open\+GL.
+
+Appel de la fonction Init\+GL \+: fonction d\textquotesingle{}initialisation de la taille de la fenêtre d\textquotesingle{}affichage Open\+GL (la même que celle de glut).
+
+En entrée de cette fonction, les deux paramètres X et Y correspondant à la taille de la fenêtre Open\+GL dans l\textquotesingle{}écran (deux dimensions) 
+\begin{DoxyParams}{Parameters}
+{\em X} & la largeur de la fenêtre en x \\
+\hline
+{\em Y} & la hauteur de la fenêtre en y \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void aucun retour de fonction.
+\end{DoxyReturn}
+This Code run the permanently wait loop of events.
+
+Appel de la fonction glut\+Main\+Loop \+: fonction lancant la boucle d\textquotesingle{}attente des événements sous glut.
+
+Aucun paramètre en entrée ni en sortie. \begin{DoxyReturn}{Returns}
+void aucun retour de fonction.
+\end{DoxyReturn}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lesson10_8c_a3c04138a5bfe5d72780bb7e82a18e627_cgraph}
+\end{center}
+\end{figure}
+\mbox{\label{lesson10_8c_aaf73c9b8937a79e00aecb489ca520d99}} 
+\index{lesson10.c@{lesson10.c}!rad@{rad}}
+\index{rad@{rad}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{rad()}
+{\footnotesize\ttfamily float rad (\begin{DoxyParamCaption}\item[{float}]{angle }\end{DoxyParamCaption})}
+
+\mbox{\label{lesson10_8c_a48c340edb19bf32b9e9f127178ade2d6}} 
+\index{lesson10.c@{lesson10.c}!readstr@{readstr}}
+\index{readstr@{readstr}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{readstr()}
+{\footnotesize\ttfamily void readstr (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{f,  }\item[{char $\ast$}]{string }\end{DoxyParamCaption})}
+
+
+
+Fonction readstr \+: fonction chargeant dans une chaîne de caractere l\textquotesingle{}article lu dans un fichier texte. 
+
+This function read the string included in text file
+
+En entrée, le nom du fichier, en retour la chaîne de caractères chargée en mémoire. 
+\begin{DoxyParams}{Parameters}
+{\em $\ast$f} & Le nom du fichier texte $\ast$ \\
+\hline
+{\em $\ast$string} & la chaîne de caractères lue $\ast$ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void aucun retour. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=317pt]{lesson10_8c_a48c340edb19bf32b9e9f127178ade2d6_icgraph}
+\end{center}
+\end{figure}
+\mbox{\label{lesson10_8c_a0fc5d8c6a4d182282b99c3c3e890b73e}} 
+\index{lesson10.c@{lesson10.c}!ReSizeGLScene@{ReSizeGLScene}}
+\index{ReSizeGLScene@{ReSizeGLScene}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{ReSizeGLScene()}
+{\footnotesize\ttfamily GLvoid Re\+Size\+GLScene (\begin{DoxyParamCaption}\item[{GLsizei}]{Width,  }\item[{GLsizei}]{Height }\end{DoxyParamCaption})}
+
+
+
+Fonction Re\+Size\+GLScene \+: fonction gerant les nouvelles dimensions de la scéne lorsque l\textquotesingle{}utilisateur agit sur un redimensionnement de la fenêtre. 
+
+This function manage the new dimension of the scene when resize of windows with instructions Open\+GL
+
+En retour les deux paramètres des nouvelles valeurs de largeur et de hauteur de la fenêtre redimensionnée. 
+\begin{DoxyParams}{Parameters}
+{\em Width} & la nouvelle largeur de la fenêtre redimensionnée $\ast$ \\
+\hline
+{\em Height} & la nouvelle hauteur de la fenêtre redimensionnée $\ast$ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void aucun retour. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=249pt]{lesson10_8c_a0fc5d8c6a4d182282b99c3c3e890b73e_icgraph}
+\end{center}
+\end{figure}
+\mbox{\label{lesson10_8c_a34e550eaac41bec549d492372e9dcbd7}} 
+\index{lesson10.c@{lesson10.c}!SetupWorld@{SetupWorld}}
+\index{SetupWorld@{SetupWorld}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{SetupWorld()}
+{\footnotesize\ttfamily void Setup\+World (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Fonction Setup\+World \+: fonction chargeant la description du \char`\"{}monde\char`\"{} à partir d\textquotesingle{}un fichier texte. 
+
+This function load the world described in text file
+
+Aucun paramètre en entrée, et rien en retour (void). \begin{DoxyReturn}{Returns}
+void aucun retour. 
+\end{DoxyReturn}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=240pt]{lesson10_8c_a34e550eaac41bec549d492372e9dcbd7_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=230pt]{lesson10_8c_a34e550eaac41bec549d492372e9dcbd7_icgraph}
+\end{center}
+\end{figure}
+\mbox{\label{lesson10_8c_ab855b7746083d623a6fe71a9a5c76406}} 
+\index{lesson10.c@{lesson10.c}!specialKeyPressed@{specialKeyPressed}}
+\index{specialKeyPressed@{specialKeyPressed}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{specialKeyPressed()}
+{\footnotesize\ttfamily void special\+Key\+Pressed (\begin{DoxyParamCaption}\item[{int}]{key,  }\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})}
+
+
+
+Fonction special\+Key\+Pressed \+: fonction permettant de connaître quelle touche spéciale a été tapée au clavier. 
+
+This function inform caller with key pressed.
+
+Le premier paarmètre en retour de cette fonction correspond à la touche précédemment appuyée. 
+\begin{DoxyParams}{Parameters}
+{\em key} & la touche appuyée $\ast$ \\
+\hline
+{\em x} & une position x au niveau du clavier $\ast$ \\
+\hline
+{\em y} & une position y au niveau du clavier $\ast$ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void aucun retour. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=264pt]{lesson10_8c_ab855b7746083d623a6fe71a9a5c76406_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\label{lesson10_8c_a3bdaffe3ca04483789487f8f80dc0ace}} 
+\index{lesson10.c@{lesson10.c}!blend@{blend}}
+\index{blend@{blend}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{blend}
+{\footnotesize\ttfamily int blend = 0}
+
+\mbox{\label{lesson10_8c_a7289fcbfabe101f9a95d563e39d1aa32}} 
+\index{lesson10.c@{lesson10.c}!camx@{camx}}
+\index{camx@{camx}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{camx}
+{\footnotesize\ttfamily GLfloat camx = 0}
+
+\mbox{\label{lesson10_8c_a12cc84dde0ea17acee077bee44cf8aa2}} 
+\index{lesson10.c@{lesson10.c}!camy@{camy}}
+\index{camy@{camy}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{camy}
+{\footnotesize\ttfamily GLfloat camy = 0}
+
+\mbox{\label{lesson10_8c_a14d6083903c5c22f364b490bab15a95e}} 
+\index{lesson10.c@{lesson10.c}!camz@{camz}}
+\index{camz@{camz}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{camz}
+{\footnotesize\ttfamily GLfloat camz = 0}
+
+\mbox{\label{lesson10_8c_abaab572c2d38c9839d1b9831155cb3f3}} 
+\index{lesson10.c@{lesson10.c}!filter@{filter}}
+\index{filter@{filter}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{filter}
+{\footnotesize\ttfamily GLuint filter = 0}
+
+\mbox{\label{lesson10_8c_ac5682e48513a771560df50e3b213e61a}} 
+\index{lesson10.c@{lesson10.c}!heading@{heading}}
+\index{heading@{heading}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{heading}
+{\footnotesize\ttfamily float heading}
+
+\mbox{\label{lesson10_8c_a840d98f11adfbaeeb77afa32ceb0e278}} 
+\index{lesson10.c@{lesson10.c}!light@{light}}
+\index{light@{light}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{light}
+{\footnotesize\ttfamily int light = 0}
+
+\mbox{\label{lesson10_8c_a933b98c8ca09e30db7b47d4d8575eaab}} 
+\index{lesson10.c@{lesson10.c}!LightAmbient@{LightAmbient}}
+\index{LightAmbient@{LightAmbient}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{LightAmbient}
+{\footnotesize\ttfamily GLfloat Light\+Ambient[$\,$] = \{0.\+5f, 0.\+5f, 0.\+5f, 1.\+0f\}}
+
+\mbox{\label{lesson10_8c_a71beb2ce6c0f1281cafe8529a93bebb1}} 
+\index{lesson10.c@{lesson10.c}!LightDiffuse@{LightDiffuse}}
+\index{LightDiffuse@{LightDiffuse}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{LightDiffuse}
+{\footnotesize\ttfamily GLfloat Light\+Diffuse[$\,$] = \{1.\+0f, 1.\+0f, 1.\+0f, 1.\+0f\}}
+
+\mbox{\label{lesson10_8c_aabd772c6114f6182a5bd105869052b24}} 
+\index{lesson10.c@{lesson10.c}!LightPosition@{LightPosition}}
+\index{LightPosition@{LightPosition}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{LightPosition}
+{\footnotesize\ttfamily GLfloat Light\+Position[$\,$] = \{0.\+0f, 0.\+0f, 2.\+0f, 1.\+0f\}}
+
+\mbox{\label{lesson10_8c_ab253ae37d6b80578f7883bbd03657a59}} 
+\index{lesson10.c@{lesson10.c}!lookupdown@{lookupdown}}
+\index{lookupdown@{lookupdown}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{lookupdown}
+{\footnotesize\ttfamily GLfloat lookupdown = 0.\+0}
+
+\mbox{\label{lesson10_8c_a8166a6eff3ba7dbe6db9caa81bdd4444}} 
+\index{lesson10.c@{lesson10.c}!loop@{loop}}
+\index{loop@{loop}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{loop}
+{\footnotesize\ttfamily GLuint loop}
+
+\mbox{\label{lesson10_8c_af7a035f1a720fb7a4a279410f376800b}} 
+\index{lesson10.c@{lesson10.c}!nFullScreen@{nFullScreen}}
+\index{nFullScreen@{nFullScreen}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{nFullScreen}
+{\footnotesize\ttfamily int n\+Full\+Screen =0}
+
+\mbox{\label{lesson10_8c_a1a6535285fc9406de04538e1200d8ed3}} 
+\index{lesson10.c@{lesson10.c}!piover180@{piover180}}
+\index{piover180@{piover180}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{piover180}
+{\footnotesize\ttfamily const float piover180 = 0.\+0174532925f}
+
+\mbox{\label{lesson10_8c_a196a466e0a51460be93ca4f32c313eff}} 
+\index{lesson10.c@{lesson10.c}!sector1@{sector1}}
+\index{sector1@{sector1}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{sector1}
+{\footnotesize\ttfamily \textbf{ SECTOR} sector1}
+
+\mbox{\label{lesson10_8c_ae303c167c23691bbf165ab05813e5713}} 
+\index{lesson10.c@{lesson10.c}!texture@{texture}}
+\index{texture@{texture}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{texture}
+{\footnotesize\ttfamily GLuint texture[3]}
+
+\mbox{\label{lesson10_8c_a1dc4634faefd59c611e482a3e8bdd277}} 
+\index{lesson10.c@{lesson10.c}!therotate@{therotate}}
+\index{therotate@{therotate}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{therotate}
+{\footnotesize\ttfamily GLfloat therotate}
+
+\mbox{\label{lesson10_8c_ac52295b1c86ab1c35431a1f02382bad1}} 
+\index{lesson10.c@{lesson10.c}!walkbias@{walkbias}}
+\index{walkbias@{walkbias}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{walkbias}
+{\footnotesize\ttfamily GLfloat walkbias = 0}
+
+\mbox{\label{lesson10_8c_ad839b78305422c269907845c11f19321}} 
+\index{lesson10.c@{lesson10.c}!walkbiasangle@{walkbiasangle}}
+\index{walkbiasangle@{walkbiasangle}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{walkbiasangle}
+{\footnotesize\ttfamily GLfloat walkbiasangle = 0}
+
+\mbox{\label{lesson10_8c_a65ba7a0b8164c01b33d92b9ab0f2af03}} 
+\index{lesson10.c@{lesson10.c}!window@{window}}
+\index{window@{window}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{window}
+{\footnotesize\ttfamily int window}
+
+\mbox{\label{lesson10_8c_adad239fcacf5c59997872bd0c12bdfd1}} 
+\index{lesson10.c@{lesson10.c}!xpos@{xpos}}
+\index{xpos@{xpos}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{xpos}
+{\footnotesize\ttfamily float xpos}
+
+\mbox{\label{lesson10_8c_a599f50b1636901ceee9b660ef480a49c}} 
+\index{lesson10.c@{lesson10.c}!xrot@{xrot}}
+\index{xrot@{xrot}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{xrot}
+{\footnotesize\ttfamily GLfloat xrot}
+
+\mbox{\label{lesson10_8c_a0b2f48da4eeb0f800c9e125995e81aed}} 
+\index{lesson10.c@{lesson10.c}!xspeed@{xspeed}}
+\index{xspeed@{xspeed}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{xspeed}
+{\footnotesize\ttfamily GLfloat xspeed}
+
+\mbox{\label{lesson10_8c_a9549138cf4d209303566523d805d8525}} 
+\index{lesson10.c@{lesson10.c}!yrot@{yrot}}
+\index{yrot@{yrot}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{yrot}
+{\footnotesize\ttfamily GLfloat yrot}
+
+\mbox{\label{lesson10_8c_a924f9c7295b7addcb7606fd6e4737d10}} 
+\index{lesson10.c@{lesson10.c}!yspeed@{yspeed}}
+\index{yspeed@{yspeed}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{yspeed}
+{\footnotesize\ttfamily GLfloat yspeed}
+
+\mbox{\label{lesson10_8c_acfde595878f838c910907ec90d040114}} 
+\index{lesson10.c@{lesson10.c}!z@{z}}
+\index{z@{z}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{z}
+{\footnotesize\ttfamily GLfloat z =0.\+0f}
+
+\mbox{\label{lesson10_8c_a1145c2d616cccd00793eb0b60929a3b3}} 
+\index{lesson10.c@{lesson10.c}!zpos@{zpos}}
+\index{zpos@{zpos}!lesson10.c@{lesson10.c}}
+\doxysubsubsection{zpos}
+{\footnotesize\ttfamily float zpos}
+

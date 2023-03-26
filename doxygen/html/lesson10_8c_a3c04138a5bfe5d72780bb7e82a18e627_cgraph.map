@@ -1,0 +1,12 @@
+<map id="main" name="main">
+<area shape="rect" id="node1" title="Programme Main obligatoire pour les programmes sous Linux (OpenGL en mode console)." alt="" coords="5,132,60,159"/>
+<area shape="rect" id="node2" href="$lesson10_8c.html#a8a5c79aa658c56b0e9abb9c539d844dd" title="Fonction DrawGLScene : fonction generant l&#39;affichage attendu avec des instructions OpenGL." alt="" coords="123,5,235,32"/>
+<area shape="rect" id="node3" href="$lesson10_8c.html#a01c1565f633296063acd943b63027c17" title="Fonction InitGL : fonction gerant les caractéristiques de base de la scéne lorsque avec des instructi..." alt="" coords="149,56,209,83"/>
+<area shape="rect" id="node6" href="$lesson10_8c.html#ae49b22892a1276b5e664963496a34177" title="Fonction keyPressed : fonction permettant de connaître quelle touche a été tapée au clavier." alt="" coords="131,107,227,133"/>
+<area shape="rect" id="node7" href="$lesson10_8c.html#a0fc5d8c6a4d182282b99c3c3e890b73e" title="Fonction ReSizeGLScene : fonction gerant les nouvelles dimensions de la scéne lorsque l&#39;utilisateur a..." alt="" coords="118,157,241,184"/>
+<area shape="rect" id="node8" href="$lesson10_8c.html#a34e550eaac41bec549d492372e9dcbd7" title="Fonction SetupWorld : fonction chargeant la description du &quot;monde&quot; à partir d&#39;un fichier texte." alt="" coords="131,208,228,235"/>
+<area shape="rect" id="node10" href="$lesson10_8c.html#ab855b7746083d623a6fe71a9a5c76406" title="Fonction specialKeyPressed : fonction permettant de connaître quelle touche spéciale a été tapée au c..." alt="" coords="108,259,251,285"/>
+<area shape="rect" id="node4" href="$lesson10_8c.html#a85ddff9fc80b25a71838e2008c6c00ee" title="Fonction LoadGLTextures : fonction chargeant la texture à appliquer à un objet avec des instructions ..." alt="" coords="299,56,423,83"/>
+<area shape="rect" id="node5" href="$lesson10_8c.html#a1e57a44f938df68cadc0cdf69a91f3da" title="Fonction ImageLoad : fonction chargeant une image stockée dans un fichier BMP." alt="" coords="471,56,565,83"/>
+<area shape="rect" id="node9" href="$lesson10_8c.html#a48c340edb19bf32b9e9f127178ade2d6" title="Fonction readstr : fonction chargeant dans une chaîne de caractere l&#39;article lu dans un fichier texte..." alt="" coords="327,208,395,235"/>
+</map>

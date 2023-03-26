@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_logger_8h" xml:lang="en-US">
+<title>/home/thierry/Sources/Opengl/Lesson10/src/logger.h File Reference</title>
+<indexterm><primary>/home/thierry/Sources/Opengl/Lesson10/src/logger.h</primary></indexterm>
+<para>
+
+<para>Header de l&apos;ajout de fonction de &quot;logging&quot; (traces dans un fichier texte log.txt) uniquement en mode Debug et avec des niveaux de tracing définis dans une variable d&apos;environnement (LEVEL) </para>
+ 
+</para>
+This graph shows which files directly or indirectly include this file:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="logger_8h__dep__incl.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>void <link linkend="_logger_8h_1abd2d19eeef46a8184a2302d33c6c7397">log_print</link> (char *filename, int line, char *fmt,...)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header de l&apos;ajout de fonction de &quot;logging&quot; (traces dans un fichier texte log.txt) uniquement en mode Debug et avec des niveaux de tracing définis dans une variable d&apos;environnement (LEVEL) </para>
+
+<para>Comments manageable by Doxygen</para>
+
+<para>Modified by Thierry DECHAIZE</para>
+
+<para>Date : 2023/03/05</para>
+
+<para><formalpara><title>Author</title>
+
+<para>Thierry Dechaize </para>
+</formalpara>
+<formalpara><title>Version</title>
+
+<para>2.0.1.0 </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>5 mars 2023</para>
+</formalpara>
+Il s&apos;agit de pouvoir partager les deux fonctions utiles de cet utilitaire. </para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_logger_8h_1abd2d19eeef46a8184a2302d33c6c7397"/>    <section>
+    <title>log_print()</title>
+<indexterm><primary>log_print</primary><secondary>logger.h</secondary></indexterm>
+<indexterm><primary>logger.h</primary><secondary>log_print</secondary></indexterm>
+<para><computeroutput>void log_print (char * filename, int line, char * fmt,  ...)</computeroutput></para></section>
+</section>
+</section>

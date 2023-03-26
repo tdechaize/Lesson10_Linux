@@ -1,0 +1,5 @@
+<map id="readstr" name="readstr">
+<area shape="rect" id="node1" title="Fonction readstr : fonction chargeant dans une chaîne de caractere l&#39;article lu dans un fichier texte..." alt="" coords="253,5,321,32"/>
+<area shape="rect" id="node2" href="$lesson10_8c.html#a34e550eaac41bec549d492372e9dcbd7" title="Fonction SetupWorld : fonction chargeant la description du &quot;monde&quot; à partir d&#39;un fichier texte." alt="" coords="108,5,205,32"/>
+<area shape="rect" id="node3" href="$lesson10_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="Programme Main obligatoire pour les programmes sous Linux (OpenGL en mode console)." alt="" coords="5,5,60,32"/>
+</map>

@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<book xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_index" xml:lang="en-US">
+    <info>
+    <title>Lesson10 (from NeHe)</title>
+    </info>
+<chapter>
+    <title>Class Documentation</title>
+    <xi:include href="struct_image.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="struct_s_e_c_t_o_r.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="struct_t_r_i_a_n_g_l_e.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="struct_v_e_r_t_e_x.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+</chapter>
+<chapter>
+    <title>File Documentation</title>
+    <xi:include href="lesson10_8c.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="logger_8c.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="logger_8h.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+</chapter>
+<index/>
+</book>

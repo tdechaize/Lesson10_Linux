@@ -1,0 +1,4 @@
+<map id="LoadGLTextures" name="LoadGLTextures">
+<area shape="rect" id="node1" title="Fonction LoadGLTextures : fonction chargeant la texture à appliquer à un objet avec des instructions ..." alt="" coords="5,5,129,32"/>
+<area shape="rect" id="node2" href="$lesson10_8c.html#a1e57a44f938df68cadc0cdf69a91f3da" title="Fonction ImageLoad : fonction chargeant une image stockée dans un fichier BMP." alt="" coords="177,5,272,32"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="SetupWorld" name="SetupWorld">
+<area shape="rect" id="node1" title="Fonction SetupWorld : fonction chargeant la description du &quot;monde&quot; à partir d&#39;un fichier texte." alt="" coords="5,5,103,32"/>
+<area shape="rect" id="node2" href="$lesson10_8c.html#a48c340edb19bf32b9e9f127178ade2d6" title="Fonction readstr : fonction chargeant dans une chaîne de caractere l&#39;article lu dans un fichier texte..." alt="" coords="151,5,219,32"/>
+</map>

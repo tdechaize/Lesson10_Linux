@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_logger_8c" xml:lang="en-US">
+<title>/home/thierry/Sources/Opengl/Lesson10/src/logger.c File Reference</title>
+<indexterm><primary>/home/thierry/Sources/Opengl/Lesson10/src/logger.c</primary></indexterm>
+<para>
+
+<para>Ajout de fonction de &quot;logging&quot; (traces dans un fichier texte log.txt) uniquement en mode Debug et avec des niveaux de tracing définis dans une variable d&apos;environnement (LEVEL) </para>
+ 
+</para>
+<programlisting>#include &lt;stdio.h&gt;
+#include &lt;stdarg.h&gt;
+#include &lt;time.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+#include &quot;logger.h&quot;
+</programlisting>Include dependency graph for logger.c:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="logger_8c__incl.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>char * <link linkend="_logger_8c_1a99e817e53a7dd7c4ca6331a467489af9">print_time</link> ()</para>
+</listitem>
+            <listitem><para>void <link linkend="_logger_8c_1abd2d19eeef46a8184a2302d33c6c7397">log_print</link> (char *filename, int line, char *fmt,...)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>FILE * <link linkend="_logger_8c_1a724e7d2bbffb847aa6e987a006d4d13b">ft</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Ajout de fonction de &quot;logging&quot; (traces dans un fichier texte log.txt) uniquement en mode Debug et avec des niveaux de tracing définis dans une variable d&apos;environnement (LEVEL) </para>
+
+<para>Comments manageable by Doxygen</para>
+
+<para>Modified by Thierry DECHAIZE</para>
+
+<para>Date : 2023/03/05</para>
+
+<para><formalpara><title>Author</title>
+
+<para>Thierry Dechaize </para>
+</formalpara>
+<formalpara><title>Version</title>
+
+<para>2.0.1.0 </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>5 mars 2023</para>
+</formalpara>
+L&apos;utilisation est très simple : #if define(DEBUG) then if LEVEL=FULL or LEVEl= BASE ... or LEVEL=OPENGL log_print(nom_du_source, ligne dans ce source, texte approprié) </para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_logger_8c_1abd2d19eeef46a8184a2302d33c6c7397"/>    <section>
+    <title>log_print()</title>
+<indexterm><primary>log_print</primary><secondary>logger.c</secondary></indexterm>
+<indexterm><primary>logger.c</primary><secondary>log_print</secondary></indexterm>
+<para><computeroutput>void log_print (char * filename, int line, char * fmt,  ...)</computeroutput></para>    </section><anchor xml:id="_logger_8c_1a99e817e53a7dd7c4ca6331a467489af9"/>    <section>
+    <title>print_time()</title>
+<indexterm><primary>print_time</primary><secondary>logger.c</secondary></indexterm>
+<indexterm><primary>logger.c</primary><secondary>print_time</secondary></indexterm>
+<para><computeroutput>char* print_time ( )</computeroutput></para></section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_logger_8c_1a724e7d2bbffb847aa6e987a006d4d13b"/>    <section>
+    <title>ft</title>
+<indexterm><primary>ft</primary><secondary>logger.c</secondary></indexterm>
+<indexterm><primary>logger.c</primary><secondary>ft</secondary></indexterm>
+<para><computeroutput>FILE* ft</computeroutput></para></section>
+</section>
+</section>

@@ -1,0 +1,5 @@
+<map id="InitGL" name="InitGL">
+<area shape="rect" id="node1" title="Fonction InitGL : fonction gerant les caractéristiques de base de la scéne lorsque avec des instructi..." alt="" coords="5,5,65,32"/>
+<area shape="rect" id="node2" href="$lesson10_8c.html#a85ddff9fc80b25a71838e2008c6c00ee" title="Fonction LoadGLTextures : fonction chargeant la texture à appliquer à un objet avec des instructions ..." alt="" coords="113,5,237,32"/>
+<area shape="rect" id="node3" href="$lesson10_8c.html#a1e57a44f938df68cadc0cdf69a91f3da" title="Fonction ImageLoad : fonction chargeant une image stockée dans un fichier BMP." alt="" coords="285,5,380,32"/>
+</map>

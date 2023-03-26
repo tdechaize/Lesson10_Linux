@@ -1,0 +1,77 @@
+\doxysection{/home/thierry/\+Sources/\+Opengl/\+Lesson10/src/logger.c File Reference}
+\label{logger_8c}\index{/home/thierry/Sources/Opengl/Lesson10/src/logger.c@{/home/thierry/Sources/Opengl/Lesson10/src/logger.c}}
+
+
+Ajout de fonction de \char`\"{}logging\char`\"{} (traces dans un fichier texte log.\+txt) uniquement en mode Debug et avec des niveaux de tracing définis dans une variable d\textquotesingle{}environnement (LEVEL)  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdarg.\+h$>$}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}logger.\+h\char`\"{}}\newline
+Include dependency graph for logger.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{logger_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \textbf{ print\+\_\+time} ()
+\item 
+void \textbf{ log\+\_\+print} (char $\ast$filename, int line, char $\ast$fmt,...)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+FILE $\ast$ \textbf{ ft}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Ajout de fonction de \char`\"{}logging\char`\"{} (traces dans un fichier texte log.\+txt) uniquement en mode Debug et avec des niveaux de tracing définis dans une variable d\textquotesingle{}environnement (LEVEL) 
+
+Comments manageable by Doxygen
+
+Modified by Thierry DECHAIZE
+
+Date \+: 2023/03/05
+
+\begin{DoxyAuthor}{Author}
+Thierry Dechaize 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+2.\+0.\+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+5 mars 2023
+\end{DoxyDate}
+L\textquotesingle{}utilisation est très simple \+: \#if define(\+DEBUG) then if LEVEL=FULL or LEVEl= BASE ... or LEVEL=OPENGL log\+\_\+print(nom\+\_\+du\+\_\+source, ligne dans ce source, texte approprié) 
+
+\doxysubsection{Function Documentation}
+\mbox{\label{logger_8c_abd2d19eeef46a8184a2302d33c6c7397}} 
+\index{logger.c@{logger.c}!log\_print@{log\_print}}
+\index{log\_print@{log\_print}!logger.c@{logger.c}}
+\doxysubsubsection{log\_print()}
+{\footnotesize\ttfamily void log\+\_\+print (\begin{DoxyParamCaption}\item[{char $\ast$}]{filename,  }\item[{int}]{line,  }\item[{char $\ast$}]{fmt,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+\mbox{\label{logger_8c_a99e817e53a7dd7c4ca6331a467489af9}} 
+\index{logger.c@{logger.c}!print\_time@{print\_time}}
+\index{print\_time@{print\_time}!logger.c@{logger.c}}
+\doxysubsubsection{print\_time()}
+{\footnotesize\ttfamily char$\ast$ print\+\_\+time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\label{logger_8c_a724e7d2bbffb847aa6e987a006d4d13b}} 
+\index{logger.c@{logger.c}!ft@{ft}}
+\index{ft@{ft}!logger.c@{logger.c}}
+\doxysubsubsection{ft}
+{\footnotesize\ttfamily FILE$\ast$ ft}
+

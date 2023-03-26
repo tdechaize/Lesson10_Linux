@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_dir_68267d1309a1af8e8297ef4c3efbcdba" xml:lang="en-US">
+<title>/home/thierry/Sources/Opengl/Lesson10/src Directory Reference</title>
+<indexterm><primary>/home/thierry/Sources/Opengl/Lesson10/src Directory Reference</primary></indexterm>
+<simplesect>
+    <title>Files    </title>
+        <itemizedlist>
+            <listitem><para>file <link linkend="_lesson10_8c">lesson10.c</link></para>
+
+<para>Ouvre une simple fenÃªtre Wayland on Linux et affiche un &quot;monde&quot; virtuel (un gros cube avec des ouvertures sur chaque face verticale et une texture reproduite sur les murs) </para>
+</listitem>
+            <listitem><para>file <link linkend="_logger_8c">logger.c</link></para>
+
+<para>Ajout de fonction de &quot;logging&quot; (traces dans un fichier texte log.txt) uniquement en mode Debug et avec des niveaux de tracing définis dans une variable d&apos;environnement (LEVEL) </para>
+</listitem>
+            <listitem><para>file <link linkend="_logger_8h">logger.h</link></para>
+
+<para>Header de l&apos;ajout de fonction de &quot;logging&quot; (traces dans un fichier texte log.txt) uniquement en mode Debug et avec des niveaux de tracing définis dans une variable d&apos;environnement (LEVEL) </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+</section>

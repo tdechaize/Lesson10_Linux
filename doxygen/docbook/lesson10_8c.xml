@@ -1,0 +1,1180 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_lesson10_8c" xml:lang="en-US">
+<title>/home/thierry/Sources/Opengl/Lesson10/src/lesson10.c File Reference</title>
+<indexterm><primary>/home/thierry/Sources/Opengl/Lesson10/src/lesson10.c</primary></indexterm>
+<para>
+
+<para>Ouvre une simple fenêtre Wayland on Linux et affiche un &quot;monde&quot; virtuel (un gros cube avec des ouvertures sur chaque face verticale et une texture reproduite sur les murs) </para>
+ 
+</para>
+<programlisting>#include &lt;GL/glut.h&gt;
+#include &lt;GL/gl.h&gt;
+#include &lt;GL/glu.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;math.h&gt;
+</programlisting>Include dependency graph for lesson10.c:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="lesson10_8c__incl.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_struct_v_e_r_t_e_x">VERTEX</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_struct_t_r_i_a_n_g_l_e">TRIANGLE</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_struct_s_e_c_t_o_r">SECTOR</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_struct_image">Image</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_lesson10_8c_1afe4b0e625372cd38ec60150d6f5594b8">ESCAPE</link>   27</para>
+</listitem>
+            <listitem><para>#define <link linkend="_lesson10_8c_1af7813ee8c85154e76928f5f1c1acf2ea">PAGE_UP</link>   73</para>
+</listitem>
+            <listitem><para>#define <link linkend="_lesson10_8c_1aa6e25cc2f8865bc6d5102488bcc35229">PAGE_DOWN</link>   81</para>
+</listitem>
+            <listitem><para>#define <link linkend="_lesson10_8c_1ad315ce436b88e78c266532e4714dd197">UP_ARROW</link>   72</para>
+</listitem>
+            <listitem><para>#define <link linkend="_lesson10_8c_1a5b1eca6358420b8748a151949d3119fa">DOWN_ARROW</link>   80</para>
+</listitem>
+            <listitem><para>#define <link linkend="_lesson10_8c_1ae78ccf44cb7970752cbfeb22e6a66d14">LEFT_ARROW</link>   75</para>
+</listitem>
+            <listitem><para>#define <link linkend="_lesson10_8c_1a9ed2533108b634266a6261c8f37e4fc0">RIGHT_ARROW</link>   77</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>float <link linkend="_lesson10_8c_1aaf73c9b8937a79e00aecb489ca520d99">rad</link> (float angle)</para>
+</listitem>
+            <listitem><para>void <link linkend="_lesson10_8c_1a48c340edb19bf32b9e9f127178ade2d6">readstr</link> (FILE *f, char *string)</para>
+
+<para>Fonction readstr : fonction chargeant dans une chaîne de caractere l&apos;article lu dans un fichier texte. </para>
+</listitem>
+            <listitem><para>void <link linkend="_lesson10_8c_1a34e550eaac41bec549d492372e9dcbd7">SetupWorld</link> ()</para>
+
+<para>Fonction SetupWorld : fonction chargeant la description du &quot;monde&quot; à partir d&apos;un fichier texte. </para>
+</listitem>
+            <listitem><para>int <link linkend="_lesson10_8c_1a1e57a44f938df68cadc0cdf69a91f3da">ImageLoad</link> (char *filename, <link linkend="_struct_image">Image</link> *image)</para>
+
+<para>Fonction ImageLoad : fonction chargeant une image stockée dans un fichier BMP. </para>
+</listitem>
+            <listitem><para>GLvoid <link linkend="_lesson10_8c_1a85ddff9fc80b25a71838e2008c6c00ee">LoadGLTextures</link> (GLvoid)</para>
+
+<para>Fonction LoadGLTextures : fonction chargeant la texture à appliquer à un objet avec des instructions OpenGL. </para>
+</listitem>
+            <listitem><para>GLvoid <link linkend="_lesson10_8c_1a01c1565f633296063acd943b63027c17">InitGL</link> (GLsizei Width, GLsizei Height)</para>
+
+<para>Fonction InitGL : fonction gerant les caractéristiques de base de la scéne lorsque avec des instructions OpenGL (arrière plan, profondeur, type de profondeur, ...) </para>
+</listitem>
+            <listitem><para>GLvoid <link linkend="_lesson10_8c_1a0fc5d8c6a4d182282b99c3c3e890b73e">ReSizeGLScene</link> (GLsizei Width, GLsizei Height)</para>
+
+<para>Fonction ReSizeGLScene : fonction gerant les nouvelles dimensions de la scéne lorsque l&apos;utilisateur agit sur un redimensionnement de la fenêtre. </para>
+</listitem>
+            <listitem><para>GLvoid <link linkend="_lesson10_8c_1a8a5c79aa658c56b0e9abb9c539d844dd">DrawGLScene</link> (GLvoid)</para>
+
+<para>Fonction DrawGLScene : fonction generant l&apos;affichage attendu avec des instructions OpenGL. </para>
+</listitem>
+            <listitem><para>void <link linkend="_lesson10_8c_1ae49b22892a1276b5e664963496a34177">keyPressed</link> (unsigned char key, int x, int y)</para>
+
+<para>Fonction keyPressed : fonction permettant de connaître quelle touche a été tapée au clavier. </para>
+</listitem>
+            <listitem><para>void <link linkend="_lesson10_8c_1ab855b7746083d623a6fe71a9a5c76406">specialKeyPressed</link> (int key, int x, int y)</para>
+
+<para>Fonction specialKeyPressed : fonction permettant de connaître quelle touche spéciale a été tapée au clavier. </para>
+</listitem>
+            <listitem><para>int <link linkend="_lesson10_8c_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+
+<para>Programme Main obligatoire pour les programmes sous Linux (OpenGL en mode console). </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_lesson10_8c_1a65ba7a0b8164c01b33d92b9ab0f2af03">window</link></para>
+</listitem>
+            <listitem><para>int <link linkend="_lesson10_8c_1af7a035f1a720fb7a4a279410f376800b">nFullScreen</link> =0</para>
+</listitem>
+            <listitem><para>GLuint <link linkend="_lesson10_8c_1a8166a6eff3ba7dbe6db9caa81bdd4444">loop</link></para>
+</listitem>
+            <listitem><para>GLuint <link linkend="_lesson10_8c_1ae303c167c23691bbf165ab05813e5713">texture</link> [3]</para>
+</listitem>
+            <listitem><para>int <link linkend="_lesson10_8c_1a840d98f11adfbaeeb77afa32ceb0e278">light</link> = 0</para>
+</listitem>
+            <listitem><para>int <link linkend="_lesson10_8c_1a3bdaffe3ca04483789487f8f80dc0ace">blend</link> = 0</para>
+</listitem>
+            <listitem><para>GLfloat <link linkend="_lesson10_8c_1a599f50b1636901ceee9b660ef480a49c">xrot</link></para>
+</listitem>
+            <listitem><para>GLfloat <link linkend="_lesson10_8c_1a9549138cf4d209303566523d805d8525">yrot</link></para>
+</listitem>
+            <listitem><para>GLfloat <link linkend="_lesson10_8c_1a0b2f48da4eeb0f800c9e125995e81aed">xspeed</link></para>
+</listitem>
+            <listitem><para>GLfloat <link linkend="_lesson10_8c_1a924f9c7295b7addcb7606fd6e4737d10">yspeed</link></para>
+</listitem>
+            <listitem><para>GLfloat <link linkend="_lesson10_8c_1ac52295b1c86ab1c35431a1f02382bad1">walkbias</link> = 0</para>
+</listitem>
+            <listitem><para>GLfloat <link linkend="_lesson10_8c_1ad839b78305422c269907845c11f19321">walkbiasangle</link> = 0</para>
+</listitem>
+            <listitem><para>GLfloat <link linkend="_lesson10_8c_1ab253ae37d6b80578f7883bbd03657a59">lookupdown</link> = 0.0</para>
+</listitem>
+            <listitem><para>const float <link linkend="_lesson10_8c_1a1a6535285fc9406de04538e1200d8ed3">piover180</link> = 0.0174532925f</para>
+</listitem>
+            <listitem><para>float <link linkend="_lesson10_8c_1ac5682e48513a771560df50e3b213e61a">heading</link></para>
+</listitem>
+            <listitem><para>float <link linkend="_lesson10_8c_1adad239fcacf5c59997872bd0c12bdfd1">xpos</link></para>
+</listitem>
+            <listitem><para>float <link linkend="_lesson10_8c_1a1145c2d616cccd00793eb0b60929a3b3">zpos</link></para>
+</listitem>
+            <listitem><para>GLfloat <link linkend="_lesson10_8c_1a7289fcbfabe101f9a95d563e39d1aa32">camx</link> = 0</para>
+</listitem>
+            <listitem><para>GLfloat <link linkend="_lesson10_8c_1a12cc84dde0ea17acee077bee44cf8aa2">camy</link> = 0</para>
+</listitem>
+            <listitem><para>GLfloat <link linkend="_lesson10_8c_1a14d6083903c5c22f364b490bab15a95e">camz</link> = 0</para>
+</listitem>
+            <listitem><para>GLfloat <link linkend="_lesson10_8c_1a1dc4634faefd59c611e482a3e8bdd277">therotate</link></para>
+</listitem>
+            <listitem><para>GLfloat <link linkend="_lesson10_8c_1acfde595878f838c910907ec90d040114">z</link> =0.0f</para>
+</listitem>
+            <listitem><para>GLfloat <link linkend="_lesson10_8c_1a933b98c8ca09e30db7b47d4d8575eaab">LightAmbient</link> [] = {0.5f, 0.5f, 0.5f, 1.0f}</para>
+</listitem>
+            <listitem><para>GLfloat <link linkend="_lesson10_8c_1a71beb2ce6c0f1281cafe8529a93bebb1">LightDiffuse</link> [] = {1.0f, 1.0f, 1.0f, 1.0f}</para>
+</listitem>
+            <listitem><para>GLfloat <link linkend="_lesson10_8c_1aabd772c6114f6182a5bd105869052b24">LightPosition</link> [] = {0.0f, 0.0f, 2.0f, 1.0f}</para>
+</listitem>
+            <listitem><para>GLuint <link linkend="_lesson10_8c_1abaab572c2d38c9839d1b9831155cb3f3">filter</link> = 0</para>
+</listitem>
+            <listitem><para><link linkend="_struct_s_e_c_t_o_r">SECTOR</link> <link linkend="_lesson10_8c_1a196a466e0a51460be93ca4f32c313eff">sector1</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Ouvre une simple fenêtre Wayland on Linux et affiche un &quot;monde&quot; virtuel (un gros cube avec des ouvertures sur chaque face verticale et une texture reproduite sur les murs) </para>
+
+<para>Comments manageable by Doxygen</para>
+
+<para>Modified smoothly by Thierry DECHAIZE</para>
+
+<para>Paradigm : obtain one source (only one !) compatible for multiple free C Compilers and provide for all users an development environment on Linux (64 bits compatible), the great Code::Blocks manager (version 20.03), and don&apos;t use glaux.lib or glaux.dll.</para>
+
+<para>a) gcc 11.3.0 (32 and 64 bits) version officielle : commande pour l&apos;installation sur Linux Mint -&gt; sudo apt-get install freeglut3 libglew-dev gcc g++ mesa-common-dev build-essential libglew2.2 libglm-dev binutils libc6 libc6-dev gcc-multilib g++-multilib; option -m32 to 32 bits ; no option to 64 bits b) CLANG version 14.0.6 (32 et 64 bits), adossé aux environnements gcc : commande pour l&apos;installation sur Linux Mint -&gt; sudo apt-get install llvm clang ; options pour la compilation et l&apos;édition de liens -&gt; &#8211;target=i686-pc-linux-gnu (32 bits) &#8211;target=x86_64-pc-linux-gnu (64 bits) c) Mingw 32 ou 64 bits version gcc version 10-win32 20220113 : commande pour l&apos;installation sur Linux Mint -&gt; sudo apt-get install mingw64 (ATTENTION, il s&apos;agit d&apos;une cross génération : l&apos;exécutable créé ne fonctionne que sur Windows !!!)</para>
+
+<para>Date : 2023/03/26</para>
+
+<para><formalpara><title>Author</title>
+
+<para>Jeff Molofee ( NeHe ) originely, ported to Linux by Richard Campbell, and after by Thierry Dechaize on Linux Mint </para>
+</formalpara>
+<formalpara><title>Version</title>
+
+<para>2.0.1.0 </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>26 mars 2023</para>
+</formalpara>
+Ce programme gére plusieurs événements : le clic sur le bouton &quot;Fermé&quot; de la fenêtre, la sortie par la touche ESC ou par les touches &quot;q&quot; ou &quot;Q&quot; [Quit]</para>
+
+<para>les touches &quot;b&quot; ou &quot;B&quot; qui active ou non le &quot;blending&quot;, les touches &quot;i&quot; ou &quot;I&quot; qui active ou non le &quot;Filter&quot;,</para>
+
+<para>les touches &quot;l&quot; ou &quot;L&quot; qui active ou non le &quot;ligthing&quot;, les touches &quot;f&quot; ou &quot;F&quot; qui active ou non le &quot;Full Screen&quot;. </para>
+</section>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_lesson10_8c_1a5b1eca6358420b8748a151949d3119fa"/>    <section>
+    <title>DOWN_ARROW</title>
+<indexterm><primary>DOWN_ARROW</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>DOWN_ARROW</secondary></indexterm>
+<para><computeroutput>#define DOWN_ARROW   80</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1afe4b0e625372cd38ec60150d6f5594b8"/>    <section>
+    <title>ESCAPE</title>
+<indexterm><primary>ESCAPE</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>ESCAPE</secondary></indexterm>
+<para><computeroutput>#define ESCAPE   27</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1ae78ccf44cb7970752cbfeb22e6a66d14"/>    <section>
+    <title>LEFT_ARROW</title>
+<indexterm><primary>LEFT_ARROW</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>LEFT_ARROW</secondary></indexterm>
+<para><computeroutput>#define LEFT_ARROW   75</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1aa6e25cc2f8865bc6d5102488bcc35229"/>    <section>
+    <title>PAGE_DOWN</title>
+<indexterm><primary>PAGE_DOWN</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>PAGE_DOWN</secondary></indexterm>
+<para><computeroutput>#define PAGE_DOWN   81</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1af7813ee8c85154e76928f5f1c1acf2ea"/>    <section>
+    <title>PAGE_UP</title>
+<indexterm><primary>PAGE_UP</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>PAGE_UP</secondary></indexterm>
+<para><computeroutput>#define PAGE_UP   73</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1a9ed2533108b634266a6261c8f37e4fc0"/>    <section>
+    <title>RIGHT_ARROW</title>
+<indexterm><primary>RIGHT_ARROW</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>RIGHT_ARROW</secondary></indexterm>
+<para><computeroutput>#define RIGHT_ARROW   77</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1ad315ce436b88e78c266532e4714dd197"/>    <section>
+    <title>UP_ARROW</title>
+<indexterm><primary>UP_ARROW</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>UP_ARROW</secondary></indexterm>
+<para><computeroutput>#define UP_ARROW   72</computeroutput></para></section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_lesson10_8c_1a8a5c79aa658c56b0e9abb9c539d844dd"/>    <section>
+    <title>DrawGLScene()</title>
+<indexterm><primary>DrawGLScene</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>DrawGLScene</secondary></indexterm>
+<para><computeroutput>GLvoid DrawGLScene (GLvoid )</computeroutput></para><para>
+
+<para>Fonction DrawGLScene : fonction generant l&apos;affichage attendu avec des instructions OpenGL. </para>
+</para>
+
+<para>This function generate the scene with instructions OpenGL</para>
+
+<para>Aucun paramètre dans ce cas de figure car tout est géré directement à l&apos;intérieur de cette fonction d&apos;affichage. <formalpara><title>Returns</title>
+
+<para>void aucun retour. </para>
+</formalpara>
+</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="lesson10_8c_a8a5c79aa658c56b0e9abb9c539d844dd_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+    </section><anchor xml:id="_lesson10_8c_1a1e57a44f938df68cadc0cdf69a91f3da"/>    <section>
+    <title>ImageLoad()</title>
+<indexterm><primary>ImageLoad</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>ImageLoad</secondary></indexterm>
+<para><computeroutput>int ImageLoad (char * filename, <link linkend="_struct_image">Image</link> * image)</computeroutput></para><para>
+
+<para>Fonction ImageLoad : fonction chargeant une image stockée dans un fichier BMP. </para>
+</para>
+
+<para>This function load image stored in file BMP (quick and dirty bitmap loader !! bug on SOLARIS/SPARC -&gt; two new functions below to correct the initial code)</para>
+
+<para>En entrée, le nom du fichier stockant l&apos;image, en retour l&apos;image chargée en mémoire. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*filename</entry>
+                                <entry>
+<para>Le nom du fichier stockant l&apos;image * </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*image</entry>
+                                <entry>
+<para>l&apos;image chargée en mémoire * </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int un entier de type booléen (0 / 1). </para>
+</formalpara>
+</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="lesson10_8c_a1e57a44f938df68cadc0cdf69a91f3da_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+    </section><anchor xml:id="_lesson10_8c_1a01c1565f633296063acd943b63027c17"/>    <section>
+    <title>InitGL()</title>
+<indexterm><primary>InitGL</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>InitGL</secondary></indexterm>
+<para><computeroutput>GLvoid InitGL (GLsizei Width, GLsizei Height)</computeroutput></para><para>
+
+<para>Fonction InitGL : fonction gerant les caractéristiques de base de la scéne lorsque avec des instructions OpenGL (arrière plan, profondeur, type de profondeur, ...) </para>
+</para>
+
+<para>This function initialize the basics characteristics of the scene with instructions OpenGL (background, depth, type of depth, reset of the projection matrix, ...)</para>
+
+<para>En retour les deux paramètres des nouvelles valeurs de largeur et de hauteur de la fenêtre redimensionnée. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>Width</entry>
+                                <entry>
+<para>la largeur de la fenêtre lors de l&apos;initialisation * </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Height</entry>
+                                <entry>
+<para>la hauteur de la fenêtre lors de l&apos;initialisation * </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>void aucun retour. </para>
+</formalpara>
+</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="lesson10_8c_a01c1565f633296063acd943b63027c17_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="lesson10_8c_a01c1565f633296063acd943b63027c17_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+    </section><anchor xml:id="_lesson10_8c_1ae49b22892a1276b5e664963496a34177"/>    <section>
+    <title>keyPressed()</title>
+<indexterm><primary>keyPressed</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>keyPressed</secondary></indexterm>
+<para><computeroutput>void keyPressed (unsigned char key, int x, int y)</computeroutput></para><para>
+
+<para>Fonction keyPressed : fonction permettant de connaître quelle touche a été tapée au clavier. </para>
+</para>
+
+<para>This function inform caller with key pressed.</para>
+
+<para>Le premier paarmètre en retour de cette fonction correspond à la touche précédemment appuyée. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>key</entry>
+                                <entry>
+<para>la touche appuyée * </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>x</entry>
+                                <entry>
+<para>une position x au niveau du clavier * </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>y</entry>
+                                <entry>
+<para>une position y au niveau du clavier * </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>void aucun retour. </para>
+</formalpara>
+</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="lesson10_8c_ae49b22892a1276b5e664963496a34177_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+    </section><anchor xml:id="_lesson10_8c_1a85ddff9fc80b25a71838e2008c6c00ee"/>    <section>
+    <title>LoadGLTextures()</title>
+<indexterm><primary>LoadGLTextures</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>LoadGLTextures</secondary></indexterm>
+<para><computeroutput>GLvoid LoadGLTextures (GLvoid )</computeroutput></para><para>
+
+<para>Fonction LoadGLTextures : fonction chargeant la texture à appliquer à un objet avec des instructions OpenGL. </para>
+</para>
+
+<para>This function load textures used for object with instructions OpenGL</para>
+
+<para>Aucun paramètre en entrée, et rien en retour (GLVoid). <formalpara><title>Returns</title>
+
+<para>GLvoid aucun retour. </para>
+</formalpara>
+</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="lesson10_8c_a85ddff9fc80b25a71838e2008c6c00ee_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="lesson10_8c_a85ddff9fc80b25a71838e2008c6c00ee_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+    </section><anchor xml:id="_lesson10_8c_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+
+<para>Programme Main obligatoire pour les programmes sous Linux (OpenGL en mode console). </para>
+</para>
+
+<para>Comments manageable by Doxygen</para>
+
+<para>Programme principal de lancement de l&apos;application qui appelle ensuite toutes les fonctions utiles OpenGL et surtout glut. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>argc</entry>
+                                <entry>
+<para>le nombre de paramètres de la ligne de commande. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>argv</entry>
+                                <entry>
+<para>un pointeur sur le tableau des différents paramètres de la ligne de commande. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int un entier permettant de connaître la statut du lancement du programme. </para>
+</formalpara>
+</para>
+
+<para>This Code initialize the context of windows on Wayland with glut.</para>
+
+<para>Appel de la fonction glutInit : fonction Glut d&apos;initialisation</para>
+
+<para>En entrée de cette fonction, les paramètres de la ligne de commande. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>argc</entry>
+                                <entry>
+<para>le nombre de paramètres mis à disposition * </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>argv</entry>
+                                <entry>
+<para>Hle tableau des différents paramètres mis à disposition * </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int un integer.</para>
+</formalpara>
+This Code initialize le mode d&apos;affichage défini avec une fonction glut.</para>
+
+<para>Appel de la fonction glutInitDisplayMode(: fonction Glut initialisant le mode d&apos;affichage.</para>
+
+<para>En entrée de cette fonction, des paramètres séparés par des &quot;ou logique&quot;. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>const</entry>
+                                <entry>
+<para>une succession deparamètres séparés par des &quot;ou logique&quot;. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>void aucun retour de fonction.</para>
+</formalpara>
+This Code initialize the dimensions (width &amp; height) of the window into screen.</para>
+
+<para>Appel de la fonction glutInitWindowSize : fonction Glut initialisant la position de la fenêtre dans l&apos;écran.</para>
+
+<para>En entrée de cette fonction, les deux paramètres X et Y correspondant à la taille de la fenêtre dans l&apos;écran (deux dimensions) 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>X</entry>
+                                <entry>
+<para>la largeur de la fenêtre en x </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Y</entry>
+                                <entry>
+<para>la hauteur de la fenêtre en y </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>void aucun retour de fonction.</para>
+</formalpara>
+This Code initialize the position of the window into screen.</para>
+
+<para>Appel de la fonction glutInitWindowPosition : fonction Glut initialisant la position de la fenêtre dans l&apos;écran.</para>
+
+<para>En entrée de cette fonction, les deux paramètres X et Y de positionnement de la fenêtre dans l&apos;écran (deux dimensions) 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>X</entry>
+                                <entry>
+<para>le positionnement de la fenêtre en x </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Y</entry>
+                                <entry>
+<para>le positionnement de la fenêtre en y </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>void aucun retour de fonction.</para>
+</formalpara>
+This Code create windows on Wayland with glut.</para>
+
+<para>Appel de la fonction glutCreateWindow : fonction Glut créant une fenêtre Wayland avec glut.</para>
+
+<para>En entrée de cette fonction, l&apos;identification de la fenêtre (.id. son nom). 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>tittle</entry>
+                                <entry>
+<para>le nom de la fenêtre </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int l&apos;identifiant entier de la fenêtre créee.</para>
+</formalpara>
+This Code rely the internal function DrawGLScene at the display function of glut.</para>
+
+<para>Appel de la fonction glutDisplayFunc : fonction Glut permettant d&apos;activer la fonction interne d&apos;affichage.</para>
+
+<para>En entrée de cette fonction, l&apos;adresse de la fonction interne appellée . 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;function</entry>
+                                <entry>
+<para>l&apos;adresse de la fonction interne d&apos;affichage. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>void aucun retour de fonction.</para>
+</formalpara>
+This Code rely the internal function DrawGLScene at the Idle Function of glut.</para>
+
+<para>Appel de la fonction glutIdleFunc : fonction d&apos;attente de Glut permettant d&apos;activer la fonction interne d&apos;affichage.</para>
+
+<para>En entrée de cette fonction, l&apos;adresse de la fonction interne appellée . 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;function</entry>
+                                <entry>
+<para>l&apos;adresse de la fonction interne d&apos;affichage. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>void aucun retour de fonction.</para>
+</formalpara>
+This Code rely the internal function ResizeGLScene at the reshape function of glut.</para>
+
+<para>Appel de la fonction glutReshapeFunc : fonction Glut permettant d&apos;activer la fonction interne de changement des dimensions d&apos;affichage.</para>
+
+<para>En entrée de cette fonction, l&apos;adresse de la fonction interne appellée. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;ResizeGLScene</entry>
+                                <entry>
+<para>l&apos;adresse de la fonction interne traitant des changements de dimension de l&apos;affichage. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>void aucun retour de fonction.</para>
+</formalpara>
+This Code rely the internal function specialKeyPressed at the special keyboard function of glut (special touchs).</para>
+
+<para>Appel de la fonction glutSpecialFunc : fonction Glut permettant de recupérer la touche appuyée sur le clavier (touches spéciales).</para>
+
+<para>En entrée de cette fonction, l&apos;adresse de la fonction interne gérant les appuis sur le clavier. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;specialKeyPressed</entry>
+                                <entry>
+<para>l&apos;adresse de la fonction interne gérant les appuis sur le clavier (touches spéciales). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>void aucun retour de fonction.</para>
+</formalpara>
+This Code rely the internal function specialKeyPressed at the special keyboard function of glut (special touchs).</para>
+
+<para>Appel de la fonction glutSpecialFunc : fonction Glut permettant de recupérer la touche appuyée sur le clavier (touches spéciales).</para>
+
+<para>En entrée de cette fonction, l&apos;adresse de la fonction interne gérant les appuis sur le clavier. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;specialKeyPressed</entry>
+                                <entry>
+<para>l&apos;adresse de la fonction interne gérant les appuis sur le clavier (touches spéciales). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>void aucun retour de fonction.</para>
+</formalpara>
+This Code initialize les paramètres d&apos;affichage OpenGL.</para>
+
+<para>Appel de la fonction InitGL : fonction d&apos;initialisation de la taille de la fenêtre d&apos;affichage OpenGL (la même que celle de glut).</para>
+
+<para>En entrée de cette fonction, les deux paramètres X et Y correspondant à la taille de la fenêtre OpenGL dans l&apos;écran (deux dimensions) 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>X</entry>
+                                <entry>
+<para>la largeur de la fenêtre en x </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Y</entry>
+                                <entry>
+<para>la hauteur de la fenêtre en y </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>void aucun retour de fonction.</para>
+</formalpara>
+This Code run the permanently wait loop of events.</para>
+
+<para>Appel de la fonction glutMainLoop : fonction lancant la boucle d&apos;attente des événements sous glut.</para>
+
+<para>Aucun paramètre en entrée ni en sortie. <formalpara><title>Returns</title>
+
+<para>void aucun retour de fonction.</para>
+</formalpara>
+</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="lesson10_8c_a3c04138a5bfe5d72780bb7e82a18e627_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+    </section><anchor xml:id="_lesson10_8c_1aaf73c9b8937a79e00aecb489ca520d99"/>    <section>
+    <title>rad()</title>
+<indexterm><primary>rad</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>rad</secondary></indexterm>
+<para><computeroutput>float rad (float angle)</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1a48c340edb19bf32b9e9f127178ade2d6"/>    <section>
+    <title>readstr()</title>
+<indexterm><primary>readstr</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>readstr</secondary></indexterm>
+<para><computeroutput>void readstr (FILE * f, char * string)</computeroutput></para><para>
+
+<para>Fonction readstr : fonction chargeant dans une chaîne de caractere l&apos;article lu dans un fichier texte. </para>
+</para>
+
+<para>This function read the string included in text file</para>
+
+<para>En entrée, le nom du fichier, en retour la chaîne de caractères chargée en mémoire. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*f</entry>
+                                <entry>
+<para>Le nom du fichier texte * </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*string</entry>
+                                <entry>
+<para>la chaîne de caractères lue * </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>void aucun retour. </para>
+</formalpara>
+</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="lesson10_8c_a48c340edb19bf32b9e9f127178ade2d6_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+    </section><anchor xml:id="_lesson10_8c_1a0fc5d8c6a4d182282b99c3c3e890b73e"/>    <section>
+    <title>ReSizeGLScene()</title>
+<indexterm><primary>ReSizeGLScene</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>ReSizeGLScene</secondary></indexterm>
+<para><computeroutput>GLvoid ReSizeGLScene (GLsizei Width, GLsizei Height)</computeroutput></para><para>
+
+<para>Fonction ReSizeGLScene : fonction gerant les nouvelles dimensions de la scéne lorsque l&apos;utilisateur agit sur un redimensionnement de la fenêtre. </para>
+</para>
+
+<para>This function manage the new dimension of the scene when resize of windows with instructions OpenGL</para>
+
+<para>En retour les deux paramètres des nouvelles valeurs de largeur et de hauteur de la fenêtre redimensionnée. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>Width</entry>
+                                <entry>
+<para>la nouvelle largeur de la fenêtre redimensionnée * </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Height</entry>
+                                <entry>
+<para>la nouvelle hauteur de la fenêtre redimensionnée * </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>void aucun retour. </para>
+</formalpara>
+</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="lesson10_8c_a0fc5d8c6a4d182282b99c3c3e890b73e_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+    </section><anchor xml:id="_lesson10_8c_1a34e550eaac41bec549d492372e9dcbd7"/>    <section>
+    <title>SetupWorld()</title>
+<indexterm><primary>SetupWorld</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>SetupWorld</secondary></indexterm>
+<para><computeroutput>void SetupWorld ( )</computeroutput></para><para>
+
+<para>Fonction SetupWorld : fonction chargeant la description du &quot;monde&quot; à partir d&apos;un fichier texte. </para>
+</para>
+
+<para>This function load the world described in text file</para>
+
+<para>Aucun paramètre en entrée, et rien en retour (void). <formalpara><title>Returns</title>
+
+<para>void aucun retour. </para>
+</formalpara>
+</para>
+Here is the call graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="lesson10_8c_a34e550eaac41bec549d492372e9dcbd7_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="lesson10_8c_a34e550eaac41bec549d492372e9dcbd7_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+    </section><anchor xml:id="_lesson10_8c_1ab855b7746083d623a6fe71a9a5c76406"/>    <section>
+    <title>specialKeyPressed()</title>
+<indexterm><primary>specialKeyPressed</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>specialKeyPressed</secondary></indexterm>
+<para><computeroutput>void specialKeyPressed (int key, int x, int y)</computeroutput></para><para>
+
+<para>Fonction specialKeyPressed : fonction permettant de connaître quelle touche spéciale a été tapée au clavier. </para>
+</para>
+
+<para>This function inform caller with key pressed.</para>
+
+<para>Le premier paarmètre en retour de cette fonction correspond à la touche précédemment appuyée. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>key</entry>
+                                <entry>
+<para>la touche appuyée * </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>x</entry>
+                                <entry>
+<para>une position x au niveau du clavier * </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>y</entry>
+                                <entry>
+<para>une position y au niveau du clavier * </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>void aucun retour. </para>
+</formalpara>
+</para>
+Here is the caller graph for this function:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="lesson10_8c_ab855b7746083d623a6fe71a9a5c76406_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_lesson10_8c_1a3bdaffe3ca04483789487f8f80dc0ace"/>    <section>
+    <title>blend</title>
+<indexterm><primary>blend</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>blend</secondary></indexterm>
+<para><computeroutput>int blend = 0</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1a7289fcbfabe101f9a95d563e39d1aa32"/>    <section>
+    <title>camx</title>
+<indexterm><primary>camx</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>camx</secondary></indexterm>
+<para><computeroutput>GLfloat camx = 0</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1a12cc84dde0ea17acee077bee44cf8aa2"/>    <section>
+    <title>camy</title>
+<indexterm><primary>camy</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>camy</secondary></indexterm>
+<para><computeroutput>GLfloat camy = 0</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1a14d6083903c5c22f364b490bab15a95e"/>    <section>
+    <title>camz</title>
+<indexterm><primary>camz</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>camz</secondary></indexterm>
+<para><computeroutput>GLfloat camz = 0</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1abaab572c2d38c9839d1b9831155cb3f3"/>    <section>
+    <title>filter</title>
+<indexterm><primary>filter</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>filter</secondary></indexterm>
+<para><computeroutput>GLuint filter = 0</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1ac5682e48513a771560df50e3b213e61a"/>    <section>
+    <title>heading</title>
+<indexterm><primary>heading</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>heading</secondary></indexterm>
+<para><computeroutput>float heading</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1a840d98f11adfbaeeb77afa32ceb0e278"/>    <section>
+    <title>light</title>
+<indexterm><primary>light</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>light</secondary></indexterm>
+<para><computeroutput>int light = 0</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1a933b98c8ca09e30db7b47d4d8575eaab"/>    <section>
+    <title>LightAmbient</title>
+<indexterm><primary>LightAmbient</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>LightAmbient</secondary></indexterm>
+<para><computeroutput>GLfloat LightAmbient[] = {0.5f, 0.5f, 0.5f, 1.0f}</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1a71beb2ce6c0f1281cafe8529a93bebb1"/>    <section>
+    <title>LightDiffuse</title>
+<indexterm><primary>LightDiffuse</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>LightDiffuse</secondary></indexterm>
+<para><computeroutput>GLfloat LightDiffuse[] = {1.0f, 1.0f, 1.0f, 1.0f}</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1aabd772c6114f6182a5bd105869052b24"/>    <section>
+    <title>LightPosition</title>
+<indexterm><primary>LightPosition</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>LightPosition</secondary></indexterm>
+<para><computeroutput>GLfloat LightPosition[] = {0.0f, 0.0f, 2.0f, 1.0f}</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1ab253ae37d6b80578f7883bbd03657a59"/>    <section>
+    <title>lookupdown</title>
+<indexterm><primary>lookupdown</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>lookupdown</secondary></indexterm>
+<para><computeroutput>GLfloat lookupdown = 0.0</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1a8166a6eff3ba7dbe6db9caa81bdd4444"/>    <section>
+    <title>loop</title>
+<indexterm><primary>loop</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>loop</secondary></indexterm>
+<para><computeroutput>GLuint loop</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1af7a035f1a720fb7a4a279410f376800b"/>    <section>
+    <title>nFullScreen</title>
+<indexterm><primary>nFullScreen</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>nFullScreen</secondary></indexterm>
+<para><computeroutput>int nFullScreen =0</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1a1a6535285fc9406de04538e1200d8ed3"/>    <section>
+    <title>piover180</title>
+<indexterm><primary>piover180</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>piover180</secondary></indexterm>
+<para><computeroutput>const float piover180 = 0.0174532925f</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1a196a466e0a51460be93ca4f32c313eff"/>    <section>
+    <title>sector1</title>
+<indexterm><primary>sector1</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>sector1</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_s_e_c_t_o_r">SECTOR</link> sector1</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1ae303c167c23691bbf165ab05813e5713"/>    <section>
+    <title>texture</title>
+<indexterm><primary>texture</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>texture</secondary></indexterm>
+<para><computeroutput>GLuint texture[3]</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1a1dc4634faefd59c611e482a3e8bdd277"/>    <section>
+    <title>therotate</title>
+<indexterm><primary>therotate</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>therotate</secondary></indexterm>
+<para><computeroutput>GLfloat therotate</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1ac52295b1c86ab1c35431a1f02382bad1"/>    <section>
+    <title>walkbias</title>
+<indexterm><primary>walkbias</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>walkbias</secondary></indexterm>
+<para><computeroutput>GLfloat walkbias = 0</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1ad839b78305422c269907845c11f19321"/>    <section>
+    <title>walkbiasangle</title>
+<indexterm><primary>walkbiasangle</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>walkbiasangle</secondary></indexterm>
+<para><computeroutput>GLfloat walkbiasangle = 0</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1a65ba7a0b8164c01b33d92b9ab0f2af03"/>    <section>
+    <title>window</title>
+<indexterm><primary>window</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>window</secondary></indexterm>
+<para><computeroutput>int window</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1adad239fcacf5c59997872bd0c12bdfd1"/>    <section>
+    <title>xpos</title>
+<indexterm><primary>xpos</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>xpos</secondary></indexterm>
+<para><computeroutput>float xpos</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1a599f50b1636901ceee9b660ef480a49c"/>    <section>
+    <title>xrot</title>
+<indexterm><primary>xrot</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>xrot</secondary></indexterm>
+<para><computeroutput>GLfloat xrot</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1a0b2f48da4eeb0f800c9e125995e81aed"/>    <section>
+    <title>xspeed</title>
+<indexterm><primary>xspeed</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>xspeed</secondary></indexterm>
+<para><computeroutput>GLfloat xspeed</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1a9549138cf4d209303566523d805d8525"/>    <section>
+    <title>yrot</title>
+<indexterm><primary>yrot</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>yrot</secondary></indexterm>
+<para><computeroutput>GLfloat yrot</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1a924f9c7295b7addcb7606fd6e4737d10"/>    <section>
+    <title>yspeed</title>
+<indexterm><primary>yspeed</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>yspeed</secondary></indexterm>
+<para><computeroutput>GLfloat yspeed</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1acfde595878f838c910907ec90d040114"/>    <section>
+    <title>z</title>
+<indexterm><primary>z</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>z</secondary></indexterm>
+<para><computeroutput>GLfloat z =0.0f</computeroutput></para>    </section><anchor xml:id="_lesson10_8c_1a1145c2d616cccd00793eb0b60929a3b3"/>    <section>
+    <title>zpos</title>
+<indexterm><primary>zpos</primary><secondary>lesson10.c</secondary></indexterm>
+<indexterm><primary>lesson10.c</primary><secondary>zpos</secondary></indexterm>
+<para><computeroutput>float zpos</computeroutput></para></section>
+</section>
+</section>
